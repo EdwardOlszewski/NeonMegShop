@@ -1,0 +1,186 @@
+main {
+  min-height: 80vh;
+}
+
+h3 {
+  padding: 1rem 0;
+}
+
+h1 {
+  font-size: 1.8rem;
+  padding: 1rem 0;
+}
+
+h2 {
+  font-size: 1.4rem;
+  padding: 0.5rem 0;
+}
+
+.rating span {
+  margin: 0.1rem;
+}
+
+/* carousel */
+.carousel {
+  background-color: rgb(0, 0, 0);
+  box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.219);
+  width: 90%;
+  text-align: center;
+  margin: auto;
+}
+
+.carousel-item-next,
+.carousel-item-prev,
+.carousel-item.active {
+  display: flex;
+}
+.carousel-caption {
+  position: absolute;
+  top: 0;
+}
+
+.carousel-caption h2 {
+  color: #fff;
+}
+
+.carousel img {
+  height: 300px;
+  padding: 30px;
+  margin: 40px;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.carousel a {
+  margin: 0 auto;
+}
+
+.nav {
+  background-color: rgb(140, 0, 255);
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.searchButton {
+  background-color: rgb(255, 34, 225);
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border: none;
+}
+.searchButton:hover {
+  background-color: rgb(177, 2, 153);
+}
+.product {
+  padding: 15px;
+  margin-bottom: 20px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.productTitle {
+  color: black;
+}
+.productPrice {
+  color: black;
+  font-size: 150%;
+}
+.mainContainer {
+  width: 70%;
+  margin: auto;
+  text-align: center;
+}
+.productListImage {
+  width: 30px;
+}
+.productEditButton {
+  margin-right: 5px;
+}
+.space {
+  height: 30%;
+}
+.btn-block {
+  background-color: rgb(255, 34, 225);
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border: none;
+}
+.btn-block:hover {
+  background-color: rgb(189, 0, 164);
+}
+.trashButton {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background-color: rgb(185, 251, 237);
+  border: none;
+  color: black;
+}
+.trashButton:hover {
+  background-color: rgb(0, 255, 200);
+  color: black;
+}
+
+/* --- HomeScreen --- */
+.home-screen {
+  margin: auto;
+  text-align: center;
+  width: 90%;
+}
+.info {
+  min-width: 90%;
+  min-width: 90%;
+}
+.categories-card {
+  text-align: left;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.categories-div {
+  text-align: left;
+  margin: auto;
+  height: 100%;
+  margin-top: 1rem;
+  font-size: 110%;
+  color: black;
+}
+.cat-btn {
+  color: black;
+}
+.cat-btn-scnd {
+  margin-left: 20px;
+  margin-top: -10px;
+  color: rgb(50, 50, 50);
+}
+
+/* --- AboutScreen --- */
+.profile-card {
+  padding: 1rem;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.profile-img {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.about-card {
+  height: 100%;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.about-links {
+  text-align: center;
+  margin: auto;
+}
+.about-links > a {
+  font-size: 200%;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+.about-text {
+  text-align: left;
+  margin: auto;
+  font-size: 110%;
+}
+.content {
+  width: 80%;
+}
+@media (max-width: 900px) {
+  .carousel-caption h2 {
+    font-size: 2.5vw;
+  }
+  .space {
+    height: 0px;
+  }
+}
