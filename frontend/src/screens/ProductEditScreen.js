@@ -1,7 +1,6 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
@@ -91,11 +90,8 @@ const ProductEditScreen = ({ match, history }) => {
   }
 
   return (
-    <>
-      <Link to='/admin/productlist' className='btn btn-light my-3'>
-        Go Back
-      </Link>
-      <FormContainer>
+    <FormContainer>
+      <Card className='card-content'>
         <h1>Edit Product</h1>
         {loadingUpdate && <Loader />}
         {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
@@ -187,8 +183,8 @@ const ProductEditScreen = ({ match, history }) => {
             </Button>
           </Form>
         )}
-      </FormContainer>
-    </>
+      </Card>
+    </FormContainer>
   )
 }
 

@@ -32,22 +32,36 @@ const CartScreen = ({ match, location, history }) => {
   return (
     <Row>
       <Col md={8}>
-        <h1>Shopping Cart</h1>
+        <div style={{ marginTop: '4.7rem' }}></div>
         {cartItems.length === 0 ? (
-          <Message>
-            Your cart is empty <Link to='/shop'>Go Back</Link>
-          </Message>
+          <div style={{ marginBottom: '2rem' }}>
+            <Card className='card-content'>
+              <Message>
+                Your cart is empty <Link to='/shop'>Go Back</Link>
+              </Message>
+            </Card>
+          </div>
         ) : (
-          <ListGroup variant='flush'>
+          <ListGroup variant='flush' style={{ borderRadius: '4px' }}>
             {cartItems.map((item) => (
-              <ListGroup.Item key={item.product}>
+              <ListGroup.Item
+                key={item.product}
+                style={{ backgroundColor: 'rgb(255, 208, 249)' }}
+              >
                 <Row>
                   <Col xs={12} md={2}>
-                    <Image src={item.image} alt={item.name} fluid rounded />
+                    <Image
+                      className='cart-img'
+                      src={item.image}
+                      alt={item.name}
+                      fluid
+                      rounded
+                    />
                   </Col>
                   <Col xs={3} md={3}>
                     <div className='space'></div>
                     <Link
+                      className='links'
                       style={{ fontSize: '120%' }}
                       to={`/product/${item.product}`}
                     >
@@ -83,7 +97,7 @@ const CartScreen = ({ match, location, history }) => {
                   <Col xs={2} md={2}>
                     <div className='space'></div>
                     <Button
-                      className='trashButton'
+                      className='btn'
                       type='button'
                       variant='light'
                       onClick={() => removeFromCartHandler(item.product)}
@@ -98,10 +112,9 @@ const CartScreen = ({ match, location, history }) => {
         )}
       </Col>
       <Col md={4}>
-        <div className='space'></div>
-        <Card>
+        <Card style={{ marginTop: '4.7rem' }}>
           <ListGroup variant='flush'>
-            <ListGroup.Item>
+            <ListGroup.Item style={{ backgroundColor: 'rgb(255, 208, 249)' }}>
               <h2>
                 Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
                 items
@@ -113,10 +126,10 @@ const CartScreen = ({ match, location, history }) => {
                   .toFixed(2)}
               </p>
             </ListGroup.Item>
-            <ListGroup.Item>
+            <ListGroup.Item style={{ backgroundColor: 'rgb(255, 208, 249)' }}>
               <Button
                 type='button'
-                className='btn-block'
+                className='btn'
                 disabled={cartItems.length === 0}
                 onClick={checkoutHandler}
               >

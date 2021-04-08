@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Table, Button, Row, Col, Image } from 'react-bootstrap'
+import { Table, Button, Row, Col, Image, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
@@ -71,7 +71,7 @@ const ProductListScreen = ({ history, match }) => {
   }
 
   return (
-    <>
+    <Card className='card-content'>
       <Row className='align-items-center'>
         <Col>
           <h1>Products</h1>
@@ -87,7 +87,14 @@ const ProductListScreen = ({ history, match }) => {
         <Message variant='danger'>{error}</Message>
       ) : (
         <>
-          <Table striped bordered hover responsive className='table-sm'>
+          <Table
+            striped
+            bordered
+            hover
+            responsive
+            className='table-sm'
+            style={{ color: 'black' }}
+          >
             <thead>
               <tr>
                 <th>IMAGE</th>
@@ -147,7 +154,7 @@ const ProductListScreen = ({ history, match }) => {
           <Paginate pages={pages} page={page} isAdmin={true} />
         </>
       )}
-    </>
+    </Card>
   )
 }
 

@@ -1,9 +1,9 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
-
+import { Navbar, Nav, NavDropdown, Image } from 'react-bootstrap'
 import { logout } from '../actions/userActions'
+import logoIMG from '../images/logo.png'
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -15,14 +15,20 @@ const Header = () => {
     dispatch(logout())
   }
 
-  //<Image src='../uploads/NeonMeg logo.png'></Image>
-
   return (
     <header>
       <Navbar className='nav' variant='dark' expand='lg' collapseOnSelect>
         <div className='container'>
-          <LinkContainer to='/'>
-            <Navbar.Brand>NeonMegs Shop</Navbar.Brand>
+          <LinkContainer to='/' className='desktop-head'>
+            <Navbar.Brand>
+              <Image src={logoIMG}></Image> NeonMegs Shop
+            </Navbar.Brand>
+          </LinkContainer>
+
+          <LinkContainer to='/' className='mobile-head'>
+            <Navbar.Brand>
+              <Image src={logoIMG}></Image>
+            </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>

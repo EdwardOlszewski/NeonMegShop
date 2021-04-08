@@ -69,24 +69,22 @@ const PlaceOrderScreen = ({ history }) => {
 
   return (
     <div style={{ width: '90%', margin: 'auto', textAlign: 'center' }}>
-      <Meta title='Place Order' />
+      <Meta title='Review Order' />
       <CheckoutSteps step1 step2 step3 />
-      <div style={{ textAlign: 'center' }}>
-        <h1>Review</h1>
-      </div>
-      <Row>
+
+      <Row style={{ marginTop: '2rem' }}>
         <Col sm={12} md={12} lg={12} xl={7} style={{ marginBottom: '2rem' }}>
-          <Card>
+          <Card className='card-content'>
             <ListGroup variant='flush'>
-              <ListGroup.Item>
+              <ListGroup.Item className='bg-color'>
                 <h2>Order Items</h2>
                 {cart.cartItems.length === 0 ? (
                   <Message>Your cart is empty</Message>
                 ) : (
                   <ListGroup variant='flush'>
-                    <ListGroup.Item></ListGroup.Item>
+                    <ListGroup.Item className='bg-color'></ListGroup.Item>
                     {cart.cartItems.map((item, index) => (
-                      <ListGroup.Item key={index}>
+                      <ListGroup.Item key={index} className='bg-color'>
                         <Row>
                           <Col md={2}>
                             <Image
@@ -99,6 +97,7 @@ const PlaceOrderScreen = ({ history }) => {
 
                           <Col md={5} style={{ marginTop: '2rem' }}>
                             <Link
+                              className='links'
                               to={`/product/${item.product}`}
                               style={{ fontSize: '130%' }}
                             >
@@ -115,7 +114,7 @@ const PlaceOrderScreen = ({ history }) => {
                       </ListGroup.Item>
                     ))}
 
-                    <ListGroup.Item>{''}</ListGroup.Item>
+                    <ListGroup.Item className='bg-color'></ListGroup.Item>
                   </ListGroup>
                 )}
               </ListGroup.Item>
@@ -132,28 +131,28 @@ const PlaceOrderScreen = ({ history }) => {
         >
           <Card>
             <ListGroup variant='flush'>
-              <ListGroup.Item>
+              <ListGroup.Item className='bg-color'>
                 <h2>Shipping</h2>
               </ListGroup.Item>
-              <ListGroup.Item>
+              <ListGroup.Item className='bg-color'>
                 <Row>
                   <Col>Address</Col>
                   <Col>{cart.shippingAddress.address}</Col>
                 </Row>
               </ListGroup.Item>
-              <ListGroup.Item>
+              <ListGroup.Item className='bg-color'>
                 <Row>
                   <Col>City</Col>
                   <Col>{cart.shippingAddress.city}</Col>
                 </Row>
               </ListGroup.Item>
-              <ListGroup.Item>
+              <ListGroup.Item className='bg-color'>
                 <Row>
                   <Col>Postal Code</Col>
                   <Col>{cart.shippingAddress.postalCode}</Col>
                 </Row>
               </ListGroup.Item>
-              <ListGroup.Item>
+              <ListGroup.Item className='bg-color'>
                 <Row>
                   <Col>Country</Col>
                   <Col>{cart.shippingAddress.country}</Col>
@@ -164,38 +163,39 @@ const PlaceOrderScreen = ({ history }) => {
 
           <Card style={{ marginTop: '3rem' }}>
             <ListGroup variant='flush'>
-              <ListGroup.Item>
+              <ListGroup.Item className='bg-color'>
                 <h2>Order Summary</h2>
               </ListGroup.Item>
-              <ListGroup.Item>
+              <ListGroup.Item className='bg-color'>
                 <Row>
                   <Col>Items</Col>
                   <Col>${cart.itemsPrice}</Col>
                 </Row>
               </ListGroup.Item>
-              <ListGroup.Item>
+              <ListGroup.Item className='bg-color'>
                 <Row>
                   <Col>Tax</Col>
                   <Col>${cart.taxPrice}</Col>
                 </Row>
               </ListGroup.Item>
-              <ListGroup.Item>
+              <ListGroup.Item className='bg-color'>
                 <Row>
                   <Col>Total</Col>
                   <Col>${cart.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
-              <ListGroup.Item>
-                {error && <Message variant='danger'>{error}</Message>}
+
+              <ListGroup.Item className='bg-color'>
+                <Button
+                  type='button'
+                  className='btn'
+                  style={{ width: '100%' }}
+                  disabled={cart.cartItems === 0}
+                  onClick={placeOrderHandler}
+                >
+                  Proceed With Order
+                </Button>
               </ListGroup.Item>
-              <Button
-                type='button'
-                className='btn-block'
-                disabled={cart.cartItems === 0}
-                onClick={placeOrderHandler}
-              >
-                Proceed With Order
-              </Button>
             </ListGroup>
           </Card>
         </Col>

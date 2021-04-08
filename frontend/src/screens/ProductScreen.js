@@ -1,22 +1,31 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
+import {
+  Row,
+  Col,
+  Image,
+  ListGroup,
+  Card,
+  Button,
+  Form,
+  Container,
+} from 'react-bootstrap'
 import Rating from '../components/Rating'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import {
-  listProductDetails,
-  createProductReview,
-} from '../actions/productActions'
+import { listProductDetails } from '../actions/productActions'
 import { createRequest } from '../actions/requestActions'
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
 import Meta from '../components/Meta'
+import ReviewModal from '../components/ReviewModal'
 
 const ProductScreen = ({ history, match }) => {
   const [qty, setQty] = useState(1)
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState('')
+
+  const ID = match.params.id
 
   const dispatch = useDispatch()
 
@@ -34,15 +43,15 @@ const ProductScreen = ({ history, match }) => {
   } = productReviewCreate
 
   useEffect(() => {
-    if (successProductReview) {
-      setRating(0)
-      setComment('')
-    }
-    if (!product._id || product._id !== match.params.id) {
+    if (
+      !product._id ||
+      product._id !== match.params.id ||
+      successProductReview
+    ) {
       dispatch(listProductDetails(match.params.id))
       dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
     }
-  }, [dispatch, match, successProductReview, product._id])
+  }, [dispatch, match, product._id, successProductReview])
 
   const addToCartHandler = () => {
     history.push(`/cart/${match.params.id}?qty=${qty}`)
@@ -56,18 +65,8 @@ const ProductScreen = ({ history, match }) => {
     }
   }
 
-  const submitHandler = (e) => {
-    e.preventDefault()
-    dispatch(
-      createProductReview(match.params.id, {
-        rating,
-        comment,
-      })
-    )
-  }
-
   return (
-    <div className='content'>
+    <Container>
       {loading ? (
         <Loader />
       ) : error ? (
@@ -75,138 +74,191 @@ const ProductScreen = ({ history, match }) => {
       ) : (
         <>
           <Meta title={product.name} />
-          <Row>
-            <Col
-              sm={12}
-              md={12}
-              lg={12}
-              xl={8}
-              className='product-image'
-              style={{ marginTop: '5rem' }}
-            >
-              <Image src={product.image} alt={product.name} fluid />
-            </Col>
+          <Card className='card-content'>
+            <Row>
+              <Col sm={12} md={12} lg={12} xl={5}>
+                <Image
+                  className='product-image'
+                  src={product.image}
+                  alt={product.name}
+                  fluid
+                />
+              </Col>
 
-            <Col
-              md={12}
-              lg={9}
-              xl={4}
-              style={{ margin: 'auto', textAlign: 'center' }}
-            >
-              <ListGroup variant='flush' style={{ marginTop: '1rem' }}>
-                <ListGroup.Item>
-                  <h1>{product.name}</h1>
-                </ListGroup.Item>
-                <ListGroup.Item
-                  style={{ paddingTop: '1rem', paddingBottom: '1rem' }}
-                >
-                  <Rating
-                    value={product.rating}
-                    text={`${product.numReviews} reviews`}
-                  />
-                </ListGroup.Item>
+              <Col
+                md={12}
+                lg={9}
+                xl={5}
+                style={{ margin: 'auto', textAlign: 'center' }}
+              >
+                <ListGroup variant='flush'>
+                  <ListGroup.Item className='bg-color'>
+                    <h1>{product.name}</h1>
+                  </ListGroup.Item>
+                  <ListGroup.Item className='bg-color'>
+                    <Rating
+                      value={product.rating}
+                      text={`${product.numReviews}  ${' '} reviews`}
+                    />
+                  </ListGroup.Item>
 
-                <Card style={{ marginTop: '2rem' }}>
-                  <ListGroup variant='flush'>
-                    <ListGroup.Item>
-                      <Row>
-                        <Col>Price:</Col>
-                        <Col>
-                          <strong>
-                            $
-                            {(Math.round(product.price * 100) / 100).toFixed(2)}
-                          </strong>
-                        </Col>
-                      </Row>
-                    </ListGroup.Item>
-
-                    <ListGroup.Item>
-                      <Row>
-                        <Col>Status:</Col>
-                        <Col>
-                          {product.countInStock > 0
-                            ? 'In Stock'
-                            : 'Out Of Stock'}
-                        </Col>
-                      </Row>
-                    </ListGroup.Item>
-
-                    <ListGroup.Item>
-                      <Row>
-                        <Col>Description</Col>
-                        <Col>
-                          <strong>{product.description}</strong>
-                        </Col>
-                      </Row>
-                    </ListGroup.Item>
-                    {product.countInStock <= 0 ? (
-                      <ListGroup.Item>
-                        <Button
-                          onClick={requestItemHandler}
-                          className='btn-block'
-                          type='button'
-                          disabled
-                        >
-                          Out Of Stock!
-                        </Button>
+                  <Card>
+                    <ListGroup variant='flush'>
+                      <ListGroup.Item className='bg-color'>
+                        <Row>
+                          <Col>Price:</Col>
+                          <Col>
+                            <strong>
+                              $
+                              {(Math.round(product.price * 100) / 100).toFixed(
+                                2
+                              )}
+                            </strong>
+                          </Col>
+                        </Row>
                       </ListGroup.Item>
-                    ) : (
-                      <>
-                        <ListGroup.Item>
-                          <Row>
-                            <Col style={{ marginTop: '8px' }}>Qty:</Col>
-                            <Col>
-                              <Form.Control
-                                as='select'
-                                value={qty}
-                                onChange={(e) => setQty(e.target.value)}
-                              >
-                                {[...Array(product.countInStock).keys()].map(
-                                  (x) => (
-                                    <option key={x + 1} value={x + 1}>
-                                      {x + 1}
-                                    </option>
-                                  )
-                                )}
-                              </Form.Control>
-                            </Col>
-                          </Row>
-                        </ListGroup.Item>
 
-                        <ListGroup.Item>
+                      <ListGroup.Item className='bg-color'>
+                        <Row>
+                          <Col>Status:</Col>
+                          <Col>
+                            {product.countInStock > 0
+                              ? 'In Stock'
+                              : 'Out Of Stock'}
+                          </Col>
+                        </Row>
+                      </ListGroup.Item>
+
+                      <ListGroup.Item className='bg-color'>
+                        <Row>
+                          <Col>Description:</Col>
+                          <Col>
+                            <strong>{product.description}</strong>
+                          </Col>
+                        </Row>
+                      </ListGroup.Item>
+                      {product.countInStock <= 0 ? (
+                        <ListGroup.Item className='bg-color'>
                           <Button
-                            onClick={addToCartHandler}
+                            onClick={requestItemHandler}
                             className='btn-block'
                             type='button'
-                            disabled={product.countInStock === 0}
+                            disabled
                           >
-                            Add To Cart
+                            Out Of Stock!
                           </Button>
                         </ListGroup.Item>
-                      </>
-                    )}
-                  </ListGroup>
-                </Card>
-              </ListGroup>
+                      ) : (
+                        <>
+                          <ListGroup.Item className='bg-color'>
+                            <Row>
+                              <Col style={{ marginTop: '8px' }}>Qty:</Col>
+                              <Col>
+                                <Form.Control
+                                  as='select'
+                                  value={qty}
+                                  onChange={(e) => setQty(e.target.value)}
+                                >
+                                  {[...Array(product.countInStock).keys()].map(
+                                    (x) => (
+                                      <option key={x + 1} value={x + 1}>
+                                        {x + 1}
+                                      </option>
+                                    )
+                                  )}
+                                </Form.Control>
+                              </Col>
+                            </Row>
+                          </ListGroup.Item>
+
+                          <ListGroup.Item className='bg-color'>
+                            <Button
+                              onClick={addToCartHandler}
+                              className='bt'
+                              style={{ width: '100%' }}
+                              type='button'
+                              disabled={product.countInStock === 0}
+                            >
+                              Add To Cart
+                            </Button>
+                          </ListGroup.Item>
+                        </>
+                      )}
+                    </ListGroup>
+                  </Card>
+                </ListGroup>
+              </Col>
+            </Row>
+          </Card>
+
+          <Row style={{ marginBottom: '2rem', marginTop: '1rem' }}>
+            <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+              <Card className='card-content'>
+                <h2>Reviews</h2>
+
+                {product.reviews.length === 0 && <Message>No Reviews</Message>}
+                <ListGroup variant='flush'>
+                  <ListGroup.Item
+                    style={{
+                      backgroundColor: 'rgb(255, 208, 249)',
+                      border: 'none',
+                      marginBottom: '-13px',
+                    }}
+                  ></ListGroup.Item>
+                  {product.reviews.map((review) => (
+                    <ListGroup.Item key={review._id} className='review-txt'>
+                      <Rating value={review.rating} />
+
+                      <p>{review.comment}</p>
+                      <p>
+                        written by {review.name},{' '}
+                        {review.createdAt.substring(0, 10)}
+                      </p>
+                    </ListGroup.Item>
+                  ))}
+                  <ListGroup.Item
+                    style={{
+                      backgroundColor: 'rgb(255, 208, 249)',
+                      border: 'none',
+                      marginTop: '2px',
+                    }}
+                  ></ListGroup.Item>
+                </ListGroup>
+
+                <ListGroup variant='flush' style={{ border: 'none' }}>
+                  {loadingProductReview && <Loader />}
+                  {errorProductReview && (
+                    <Message variant='danger'>{errorProductReview}</Message>
+                  )}
+                  {userInfo ? (
+                    <ReviewModal ID={ID} />
+                  ) : (
+                    <Message>
+                      Please <Link to='/login'>sign in</Link> to write a review{' '}
+                    </Message>
+                  )}
+                </ListGroup>
+              </Card>
             </Col>
           </Row>
+        </>
+      )}
+    </Container>
+  )
+}
 
-          <Row>
-            <Col md={1}></Col>
-            <Col sm={12} md={12} lg={12} xl={7} style={{ marginTop: '3rem' }}>
-              <h2>Reviews</h2>
+export default ProductScreen
 
-              {product.reviews.length === 0 && <Message>No Reviews</Message>}
-              <ListGroup variant='flush'>
-                {product.reviews.map((review) => (
-                  <ListGroup.Item key={review._id}>
-                    <strong>{review.name}</strong>
-                    <Rating value={review.rating} />
-                    <p>{review.createdAt.substring(0, 10)}</p>
-                    <p>{review.comment}</p>
-                  </ListGroup.Item>
-                ))}
-                <ListGroup.Item style={{ marginTop: '2rem' }}>
+/*
+
+     <Row>
+            <Col md={1} xl={2}></Col>
+            <Col sm={12} md={12} lg={12} xl={9} style={{ marginTop: '3rem' }}>
+              <ListGroup>
+                <ListGroup.Item
+                  style={{ marginTop: '2rem' }}
+                  className='bg-color'
+                >
                   <h2>Write a Customer Review</h2>
                   {successProductReview && (
                     <Message variant='success'>
@@ -218,40 +270,7 @@ const ProductScreen = ({ history, match }) => {
                     <Message variant='danger'>{errorProductReview}</Message>
                   )}
                   {userInfo ? (
-                    <Form onSubmit={submitHandler}>
-                      <Form.Group controlId='rating'>
-                        <Form.Label>Rating</Form.Label>
-                        <Form.Control
-                          as='select'
-                          value={rating}
-                          onChange={(e) => setRating(e.target.value)}
-                        >
-                          <option value=''>Select...</option>
-                          <option value='1'>1 - Poor</option>
-                          <option value='2'>2 - Fair</option>
-                          <option value='3'>3 - Good</option>
-                          <option value='4'>4 - Very Good</option>
-                          <option value='5'>5 - Excellent</option>
-                        </Form.Control>
-                      </Form.Group>
-                      <Form.Group controlId='comment'>
-                        <Form.Label>Comment</Form.Label>
-                        <Form.Control
-                          as='textarea'
-                          row='3'
-                          value={comment}
-                          onChange={(e) => setComment(e.target.value)}
-                        ></Form.Control>
-                      </Form.Group>
-                      <Button
-                        style={{ width: '100%' }}
-                        disabled={loadingProductReview}
-                        type='submit'
-                        variant='primary'
-                      >
-                        Submit
-                      </Button>
-                    </Form>
+                    <ReviewModal ID={ID} />
                   ) : (
                     <Message>
                       Please <Link to='/login'>sign in</Link> to write a review{' '}
@@ -259,60 +278,24 @@ const ProductScreen = ({ history, match }) => {
                   )}
                 </ListGroup.Item>
               </ListGroup>
-            </Col>
-          </Row>
-        </>
-      )}
-    </div>
-  )
-}
 
-export default ProductScreen
-
-/*
-
-    {product.countInStock < 0 ? (
-                      <ListGroup.Item>
-                        <Row>
-                          <Col style={{ marginTop: '8px' }}>Qty:</Col>
-                          <Col>
-                            <Form.Control
-                              as='select'
-                              value={qty}
-                              onChange={(e) => setQty(e.target.value)}
-                            >
-                              {[...Array(product.countInStock).keys()].map(
-                                (x) => (
-                                  <option key={x + 1} value={x + 1}>
-                                    {x + 1}
-                                  </option>
-                                )
-                              )}
-                            </Form.Control>
-                          </Col>
-                        </Row>
-                      </ListGroup.Item>
-                    ) : (
-                      <Button
-                        onClick={addToCartHandler}
-                        className='btn-block'
-                        type='button'
-                        disabled={product.countInStock === 0}
-                      >
-                        Out Of Stock, Request Item
-                      </Button>
-                    )}
-
-                    <ListGroup.Item>
-                      <Button
-                        onClick={addToCartHandler}
-                        className='btn-block'
-                        type='button'
-                        disabled={product.countInStock === 0}
-                      >
-                        Add To Cart
-                      </Button>
+              <Card className='card-content'>
+                <h2>Reviews</h2>
+                {product.reviews.length === 0 && <Message>No Reviews</Message>}
+                <ListGroup variant='flush'>
+                  {product.reviews.map((review) => (
+                    <ListGroup.Item key={review._id} className='bg-color'>
+                      <strong>{review.name}</strong>
+                      <Rating value={review.rating} />
+                      <p>{review.createdAt.substring(0, 10)}</p>
+                      <p>{review.comment}</p>
                     </ListGroup.Item>
+                  ))}
+                </ListGroup>
+              </Card>
+            </Col>
+            <Col md={1} xl={2}></Col>
+          </Row>
 
 
 */

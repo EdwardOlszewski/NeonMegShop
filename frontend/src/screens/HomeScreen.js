@@ -28,7 +28,6 @@ const HomeScreen = ({ match }) => {
   return (
     <div className='home-screen'>
       <Meta />
-      <h1>Welcome To My Shop!</h1>
       {loading ? (
         <Loader />
       ) : error ? (
@@ -36,27 +35,29 @@ const HomeScreen = ({ match }) => {
       ) : (
         <div className='info'>
           <Row>
-            <Col xl={2} style={{ marginBottom: '2rem' }}>
+            <Col xl={12} style={{ marginBottom: '1rem' }}>
               <Card className='categories-card '>
                 <CategoryComponent />
               </Card>
             </Col>
+          </Row>
 
-            <Col xl={10}>
-              <Row>
+          <Row>
+            <Col xl={12}>
+              <Row noGutters>
                 {products.map((product) => (
-                  <Col key={product._id} xs={6} sm={6} md={4} lg={3} xl={3}>
+                  <Col key={product._id} xs={6} sm={6} md={4} lg={3} xl={2}>
                     <Product product={product} />
                   </Col>
                 ))}
               </Row>
-              <div className='page-card'>
+              <Card className='page-card' style={{ marginTop: '10px' }}>
                 <Paginate
                   pages={pages}
                   page={page}
                   keyword={keyword ? keyword : ''}
                 />
-              </div>
+              </Card>
             </Col>
           </Row>
         </div>

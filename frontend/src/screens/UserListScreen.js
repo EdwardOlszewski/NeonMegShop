@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Table, Button } from 'react-bootstrap'
+import { Table, Button, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
@@ -33,14 +33,21 @@ const UserListScreen = ({ history }) => {
   }
 
   return (
-    <>
+    <Card className='card-content'>
       <h1>Users</h1>
       {loading ? (
         <Loader />
       ) : error ? (
         <Message variant='danger'>{error}</Message>
       ) : (
-        <Table striped bordered hover responsive className='table-sm'>
+        <Table
+          striped
+          bordered
+          hover
+          responsive
+          className='table-sm'
+          style={{ color: 'black' }}
+        >
           <thead>
             <tr>
               <th>ID</th>
@@ -56,7 +63,9 @@ const UserListScreen = ({ history }) => {
                 <td>{user._id}</td>
                 <td>{user.name}</td>
                 <td>
-                  <a href={`mailto:${user.email}`}>{user.email}</a>
+                  <a className='links' href={`mailto:${user.email}`}>
+                    {user.email}
+                  </a>
                 </td>
                 <td>
                   {user.isAdmin ? (
@@ -84,7 +93,7 @@ const UserListScreen = ({ history }) => {
           </tbody>
         </Table>
       )}
-    </>
+    </Card>
   )
 }
 

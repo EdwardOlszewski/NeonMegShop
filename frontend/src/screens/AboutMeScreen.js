@@ -5,29 +5,15 @@ import profilePic1 from '../images/profile.jpg'
 const AboutMeScreen = () => {
   return (
     <Container>
-      <Row>
-        <Col
-          xs={12}
-          sm={12}
-          md={12}
-          lg={5}
-          xl={5}
-          style={{ marginTop: '1rem' }}
-        >
-          <Card className='profile-card'>
+      <Row className='justify-content-md-center'>
+        <Col xs={12} sm={12} md={6} lg={4} xl={4} style={{ marginTop: '1rem' }}>
+          <Card className='card-content' style={{ height: '100%' }}>
             <Image className='profile-img' src={profilePic1}></Image>
           </Card>
         </Col>
-        <Col
-          xs={12}
-          sm={12}
-          md={12}
-          lg={7}
-          xl={7}
-          style={{ marginTop: '1rem' }}
-        >
-          <Card className='about-card'>
-            <Card.Title style={{ marginTop: '1rem' }}>
+        <Col xs={12} sm={12} md={6} lg={7} xl={7} style={{ marginTop: '1rem' }}>
+          <Card className='card-content'>
+            <Card.Title style={{ marginTop: '1rem', color: 'black' }}>
               Hello, my name is Megan.
             </Card.Title>
             <Card.Body className='about-text'>
@@ -64,7 +50,7 @@ const AboutMeScreen = () => {
                 </a>
 
                 <a href='/'>
-                  <i className='fas fa-envelope'></i>
+                  <i className='fas fa-envelope-square'></i>
                 </a>
               </div>
             </Card.Body>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Col, Row, Container } from 'react-bootstrap'
+import { Form, Col, Row, Container, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
 import CheckoutSteps from '../components/CheckoutSteps'
@@ -90,14 +90,14 @@ const PaymentScreen = ({ match, history }) => {
       ) : order.isPaid ? (
         <Message variant='danger'>AlreadyPaid</Message>
       ) : (
-        <>
+        <FormContainer>
           <Meta title='Shipping' />
           <CheckoutSteps step1 step2 step3 step4 />
-          <div style={{ textAlign: 'center' }}>
-            <h1>Payment</h1>
-          </div>
 
-          <FormContainer>
+          <Card className='card-content' style={{ marginTop: '2rem' }}>
+            <div style={{ textAlign: 'center' }}>
+              <h1>Payment</h1>
+            </div>
             <Form id='payment-form' onSubmit={updateBillingInfo}>
               <Row sm={12} lg={12} md={1} xl={12}>
                 <Form.Group
@@ -189,8 +189,8 @@ const PaymentScreen = ({ match, history }) => {
                 />
               </Elements>
             </Form>
-          </FormContainer>
-        </>
+          </Card>
+        </FormContainer>
       )}
     </Container>
   )

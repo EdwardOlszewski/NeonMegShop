@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Nav } from 'react-bootstrap'
+import { Form, ListGroupItem, Nav } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 
 const Catagories = ({ history }) => {
@@ -17,24 +17,24 @@ const Catagories = ({ history }) => {
   return (
     <Form onSubmit={submitHandler} inline>
       <div className='categories-div'>
-        <LinkContainer to='/shop'>
+        <LinkContainer to='/shop' activeClassName='activeButtons'>
           <Nav.Link className='cat-btn'>All</Nav.Link>
         </LinkContainer>
 
-        <LinkContainer to='/search/pillow'>
+        <LinkContainer to='/search/pillow' activeClassName='activeButtons'>
           <Nav.Link className='cat-btn'>Pillow</Nav.Link>
         </LinkContainer>
 
-        <LinkContainer to='/search/felt'>
+        <LinkContainer to='/search/felt' activeClassName='activeButtons'>
           <Nav.Link className='cat-btn'>Felt Work</Nav.Link>
         </LinkContainer>
 
-        <LinkContainer to='/search/painting'>
+        <LinkContainer to='/search/painting' activeClassName='activeButtons'>
           <Nav.Link className='cat-btn'>Paintings</Nav.Link>
         </LinkContainer>
 
-        <LinkContainer to='/search/beaded'>
-          <Nav.Link className='cat-btn'>Beaded Work</Nav.Link>
+        <LinkContainer to='/search/beaded' activeClassName='activeButtons'>
+          <Nav.Link className='cat-btn'>Beaded</Nav.Link>
         </LinkContainer>
       </div>
     </Form>

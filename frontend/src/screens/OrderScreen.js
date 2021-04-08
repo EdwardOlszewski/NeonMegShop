@@ -77,50 +77,59 @@ const OrderScreen = ({ match, history }) => {
         <div style={{ width: '90%', margin: 'auto', textAlign: 'center' }}>
           <Row>
             <Col sm={12} md={12} lg={12} xl={7} style={{ marginTop: '3rem' }}>
-              <ListGroup>
-                <ListGroup.Item>
-                  <h2>Order Items</h2>
-                  {order.orderItems.length === 0 ? (
-                    <Message>Order is empty</Message>
-                  ) : (
-                    <ListGroup variant='flush'>
-                      <ListGroup.Item></ListGroup.Item>
-                      {order.orderItems.map((item, index) => (
-                        <ListGroup.Item key={index}>
-                          <Row>
-                            <Col md={2}>
-                              <Image
-                                src={item.image}
-                                alt={item.name}
-                                fluid
-                                rounded
-                              />
-                            </Col>
+              <Card className='card-content'>
+                <ListGroup>
+                  <ListGroup.Item
+                    className='bg-color'
+                    style={{ border: 'none' }}
+                  >
+                    <h2>Order Items</h2>
+                    {order.orderItems.length === 0 ? (
+                      <Message>Order is empty</Message>
+                    ) : (
+                      <ListGroup variant='flush'>
+                        <ListGroup.Item className='bg-color'></ListGroup.Item>
+                        {order.orderItems.map((item, index) => (
+                          <ListGroup.Item key={index} className='bg-color'>
+                            <Row>
+                              <Col md={2}>
+                                <Image
+                                  src={item.image}
+                                  alt={item.name}
+                                  fluid
+                                  rounded
+                                />
+                              </Col>
 
-                            <Col md={5} style={{ marginTop: '3rem' }}>
-                              <Link
-                                to={`/product/${item.product}`}
-                                style={{ fontSize: '130%' }}
-                              >
-                                {item.name}
-                              </Link>
-                            </Col>
-                            <Col md={5}>
-                              <p
-                                style={{ marginTop: '3rem', fontSize: '130%' }}
-                              >
-                                {item.qty} x ${item.price} = $
-                                {item.qty * item.price}{' '}
-                              </p>
-                            </Col>
-                          </Row>
-                        </ListGroup.Item>
-                      ))}
-                      <ListGroup.Item>{''}</ListGroup.Item>
-                    </ListGroup>
-                  )}
-                </ListGroup.Item>
-              </ListGroup>
+                              <Col xs={5} md={5} style={{ marginTop: '3rem' }}>
+                                <Link
+                                  className='links'
+                                  to={`/product/${item.product}`}
+                                  style={{ fontSize: '130%' }}
+                                >
+                                  {item.name}
+                                </Link>
+                              </Col>
+                              <Col xs={7} md={5}>
+                                <p
+                                  style={{
+                                    marginTop: '3rem',
+                                    fontSize: '130%',
+                                  }}
+                                >
+                                  {item.qty} x ${item.price} = $
+                                  {item.qty * item.price}{' '}
+                                </p>
+                              </Col>
+                            </Row>
+                          </ListGroup.Item>
+                        ))}
+                        <ListGroup.Item className='bg-color'></ListGroup.Item>
+                      </ListGroup>
+                    )}
+                  </ListGroup.Item>
+                </ListGroup>
+              </Card>
             </Col>
             <Col
               sm={12}
@@ -129,36 +138,36 @@ const OrderScreen = ({ match, history }) => {
               xl={4}
               style={{ textAlign: 'center', margin: 'auto', marginTop: '3rem' }}
             >
-              <Card>
+              <Card className='card-content'>
                 <ListGroup variant='flush' style={{ textAlign: 'center' }}>
-                  <ListGroup.Item>
+                  <ListGroup.Item className='bg-color'>
                     <h2>Order Summary</h2>
                   </ListGroup.Item>
-                  <ListGroup.Item>
+                  <ListGroup.Item className='bg-color'>
                     <Row>
                       <Col>Order Number</Col>
                       <Col>{order._id}</Col>
                     </Row>
                   </ListGroup.Item>
-                  <ListGroup.Item>
+                  <ListGroup.Item className='bg-color'>
                     <Row>
                       <Col>Items</Col>
                       <Col>${order.itemsPrice}</Col>
                     </Row>
                   </ListGroup.Item>
-                  <ListGroup.Item>
+                  <ListGroup.Item className='bg-color'>
                     <Row>
                       <Col>Tax</Col>
                       <Col>${order.taxPrice}</Col>
                     </Row>
                   </ListGroup.Item>
-                  <ListGroup.Item>
+                  <ListGroup.Item className='bg-color'>
                     <Row>
                       <Col>Total</Col>
                       <Col>${order.totalPrice}</Col>
                     </Row>
                   </ListGroup.Item>
-                  <ListGroup.Item>
+                  <ListGroup.Item className='bg-color'>
                     {order.isPaid ? (
                       <Message variant='success'>
                         Paid on: {' ' + DateFormat(order.paidAt)}
@@ -169,22 +178,22 @@ const OrderScreen = ({ match, history }) => {
                   </ListGroup.Item>
 
                   <ListGroup variant='flush' style={{ textAlign: 'center' }}>
-                    <ListGroup.Item>
+                    <ListGroup.Item className='bg-color'>
                       <h2>Shipping</h2>
                     </ListGroup.Item>
-                    <ListGroup.Item>
+                    <ListGroup.Item className='bg-color'>
                       <Row>
                         <Col>Name</Col>
                         <Col>{order.user.name}</Col>
                       </Row>
                     </ListGroup.Item>
-                    <ListGroup.Item>
+                    <ListGroup.Item className='bg-color'>
                       <Row>
                         <Col>Email</Col>
                         <Col>{order.user.email}</Col>
                       </Row>
                     </ListGroup.Item>
-                    <ListGroup.Item>
+                    <ListGroup.Item className='bg-color'>
                       <Row>
                         <Col>Address</Col>
                         <Col>
@@ -195,7 +204,7 @@ const OrderScreen = ({ match, history }) => {
                         </Col>
                       </Row>
                     </ListGroup.Item>
-                    <ListGroup.Item>
+                    <ListGroup.Item className='bg-color'>
                       {order.isDelivered ? (
                         <Message variant='success'>
                           Shipped on: {' ' + DateFormat(order.deliveredAt)}
@@ -207,7 +216,7 @@ const OrderScreen = ({ match, history }) => {
                   </ListGroup>
 
                   {!order.isPaid && (
-                    <ListGroup.Item>
+                    <ListGroup.Item className='bg-color'>
                       {loadingPay && <Loader />}
                       {null ? <Loader /> : <></>}
                     </ListGroup.Item>
@@ -217,7 +226,7 @@ const OrderScreen = ({ match, history }) => {
                     userInfo.isAdmin &&
                     order.isPaid &&
                     !order.isDelivered && (
-                      <ListGroup.Item>
+                      <ListGroup.Item className='bg-color'>
                         <Button
                           type='button'
                           className='btn btn-block'
