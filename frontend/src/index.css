@@ -134,10 +134,19 @@ h2 {
 
 /* --- AboutScreen --- */
 .about-screen {
-  width: 100%;
+  width: 60%;
+  text-align: center;
+  margin: auto;
+}
+.img-col {
+  text-align: center;
+  margin: auto;
 }
 .profile-img {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  width: 100%;
+  text-align: center;
+  margin: auto;
 }
 .about-links {
   text-align: center;
@@ -298,5 +307,8 @@ h2 {
   .product-image {
     padding: 2rem;
     margin-left: 0;
+  }
+  .about-screen {
+    width: 80%;
   }
 }

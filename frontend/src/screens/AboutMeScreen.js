@@ -5,6 +5,41 @@ import profilePic1 from '../images/profile.jpg'
 const AboutMeScreen = () => {
   return (
     <Container>
+      <Card className='card-content'>
+        <Row className='justify-content-md-center'>
+          <Col xs={8} sm={7} md={5} lg={4} xl={4} className='img-col'>
+            <Image className='profile-img' src={profilePic1}></Image>
+          </Col>
+          <Col xs={12} sm={12} md={7} lg={7} xl={7}>
+            <Card.Title style={{ marginTop: '1rem', color: 'black' }}>
+              About Me
+            </Card.Title>
+            <Card.Body className='about-text'>
+              <p>
+                Hello, im Megan. I am a 29 year old mother who has cystic
+                fibrosis. I love to express myself through art.
+              </p>
+
+              <br />
+
+              <p>
+                I work with alot of different mediums. Right now my focus is on
+                pearl beads, painting, pillows, and needle felting. Contact me
+                with any requests!
+              </p>
+            </Card.Body>
+          </Col>
+        </Row>
+      </Card>
+    </Container>
+  )
+}
+
+export default AboutMeScreen
+
+/*
+
+<div className='about-screen'>
       <Row className='justify-content-md-center'>
         <Col xs={12} sm={12} md={6} lg={4} xl={4} style={{ marginTop: '1rem' }}>
           <Card className='card-content'>
@@ -57,8 +92,7 @@ const AboutMeScreen = () => {
           </Card>
         </Col>
       </Row>
-    </Container>
-  )
-}
+    </div>
 
-export default AboutMeScreen
+
+    */
