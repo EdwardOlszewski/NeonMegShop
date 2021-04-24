@@ -7,7 +7,7 @@ const AboutMeScreen = () => {
     <Container>
       <Row className='justify-content-md-center'>
         <Col xs={12} sm={12} md={6} lg={4} xl={4} style={{ marginTop: '1rem' }}>
-          <Card className='card-content' style={{ height: '100%' }}>
+          <Card className='card-content'>
             <Image className='profile-img' src={profilePic1}></Image>
           </Card>
         </Col>

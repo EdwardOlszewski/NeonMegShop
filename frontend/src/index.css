@@ -22,7 +22,7 @@ main {
   box-shadow: var(--card-box-shadow);
   color: black;
   min-height: 20vh;
-
+  height: 100%;
   margin: 3px;
 }
 .bg-color {
@@ -84,6 +84,7 @@ h2 {
   margin: 3px;
   background-color: var(--card-bg-color);
   box-shadow: var(--card-box-shadow);
+  min-height: 99%;
 }
 .productTitle {
   color: black;
@@ -297,8 +298,5 @@ h2 {
   .product-image {
     padding: 2rem;
     margin-left: 0;
-  }
-  .profile-img {
-    margin: 2rem;
   }
 }
