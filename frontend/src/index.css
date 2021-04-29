@@ -21,7 +21,6 @@ main {
   background-color: var(--card-bg-color);
   box-shadow: var(--card-box-shadow);
   color: black;
-  min-height: 20vh;
   height: 100%;
   margin: 3px;
 }
@@ -143,7 +142,7 @@ h2 {
   margin: auto;
 }
 .profile-img {
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
   width: 100%;
   text-align: center;
   margin: auto;
@@ -158,13 +157,14 @@ h2 {
   margin-right: 1rem;
   color: var(--nav-bg-color);
 }
+
 .about-links > a:hover {
   color: var(--btn-bg-hv-color);
 }
 .about-text {
   text-align: left;
   margin: auto;
-  font-size: 110%;
+  font-size: 130%;
 }
 .content {
   margin: auto;

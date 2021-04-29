@@ -11,22 +11,41 @@ const AboutMeScreen = () => {
             <Image className='profile-img' src={profilePic1}></Image>
           </Col>
           <Col xs={12} sm={12} md={7} lg={7} xl={7}>
-            <Card.Title style={{ marginTop: '1rem', color: 'black' }}>
-              About Me
-            </Card.Title>
             <Card.Body className='about-text'>
               <p>
-                Hello, im Megan. I am a 29 year old mother who has cystic
-                fibrosis. I love to express myself through art.
+                Hello! My name is Megan. I'm a mom and a lover of all things
+                art. Art is 100% my therapy. I enjoy painting, working with
+                felts and fabrics, as well as perler beading.
               </p>
-
               <br />
-
               <p>
-                I work with alot of different mediums. Right now my focus is on
-                pearl beads, painting, pillows, and needle felting. Contact me
-                with any requests!
+                Feel free to browse my shop and see what I have to offer. For
+                any request please message me at one of my links.
               </p>
+              <br />
+              <p>
+                Having cystic fibrosis id like to share the{' '}
+                <a href='https://www.cff.org'>
+                  Cystic Fibrosis Foundation Website
+                </a>{' '}
+                to help educate about what cystic fibrosis is as well as share a
+                great organization for donations.
+              </p>
+
+              <div className='about-links'>
+                <a href='/'>
+                  <i className='fab fa-instagram-square'></i>
+                </a>
+
+                <a href='/'>
+                  <i className='fab fa-facebook-square'></i>
+                </a>
+
+                <a href='/'>
+                  <i className='fas fa-envelope-square'></i>
+                </a>
+              </div>
+              <br />
             </Card.Body>
           </Col>
         </Row>
