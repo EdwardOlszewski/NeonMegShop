@@ -11,7 +11,7 @@
 }
 
 main {
-  min-height: 91vh;
+  min-height: 86vh;
   background-image: url('./collage.png');
 }
 
@@ -23,6 +23,7 @@ main {
   color: black;
   height: 100%;
   margin: 3px;
+  margin-top: 1rem;
 }
 .bg-color {
   background-color: var(--card-bg-color);
@@ -79,7 +80,7 @@ h2 {
 
 /* --- Product Screen --- */
 .product {
-  border-radius: 2%;
+  border-radius: 2px;
   margin: 3px;
   background-color: var(--card-bg-color);
   box-shadow: var(--card-box-shadow);
@@ -178,7 +179,7 @@ h2 {
   text-align: center;
   width: 90%;
   padding-bottom: 2rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 .info {
   min-width: 90%;
@@ -241,7 +242,7 @@ h2 {
 /* ---  Footer --- */
 .footer {
   background-color: rgb(183, 0, 255);
-  color: white;
+  color: rgb(189, 189, 189);
 }
 
 /* --- pageinate buttons ---*/
@@ -268,7 +269,7 @@ h2 {
   height: 40px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 550px) {
   .carousel-caption h2 {
     font-size: 2.5vw;
   }
@@ -295,11 +296,12 @@ h2 {
     width: 90%;
   }
   .categories-div {
-    font-size: 100%;
+    font-size: 78%;
+    width: 100%;
   }
   .cat-btn {
-    margin-left: -0.1rem;
-    margin-right: -0.1rem;
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
   }
   .cart-img {
     padding: 4rem;

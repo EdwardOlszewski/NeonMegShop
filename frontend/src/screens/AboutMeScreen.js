@@ -19,19 +19,19 @@ const AboutMeScreen = () => {
               </p>
               <br />
               <p>
-                Feel free to browse my shop and see what I have to offer. For
-                any request please message me at one of my links.
-              </p>
-              <br />
-              <p>
-                Having cystic fibrosis id like to share the{' '}
+                Having cystic fibrosis I would like to share the{' '}
                 <a href='https://www.cff.org'>
                   Cystic Fibrosis Foundation Website
                 </a>{' '}
                 to help educate about what cystic fibrosis is as well as share a
                 great organization for donations.
               </p>
+              <br />
 
+              <p>
+                Feel free to browse my shop and see what I have to offer. For
+                any request please message me at one of my links.
+              </p>
               <div className='about-links'>
                 <a href='/'>
                   <i className='fab fa-instagram-square'></i>

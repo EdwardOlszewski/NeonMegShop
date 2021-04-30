@@ -51,13 +51,15 @@ const HomeScreen = ({ match }) => {
                   </Col>
                 ))}
               </Row>
-              <Card className='page-card' style={{ marginTop: '10px' }}>
-                <Paginate
-                  pages={pages}
-                  page={page}
-                  keyword={keyword ? keyword : ''}
-                />
-              </Card>
+              {pages > 1 ? (
+                <Card className='page-card' style={{ marginTop: '10px' }}>
+                  <Paginate
+                    pages={pages}
+                    page={page}
+                    keyword={keyword ? keyword : ''}
+                  />
+                </Card>
+              ) : null}
             </Col>
           </Row>
         </div>
