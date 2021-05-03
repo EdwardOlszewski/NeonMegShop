@@ -16,6 +16,11 @@ main {
 }
 
 /* --- MISC --- */
+.content-div {
+  background-color: var(--card-bg-color);
+  box-shadow: var(--card-box-shadow);
+  margin-top: 1rem;
+}
 .card-content {
   padding: 1rem;
   background-color: var(--card-bg-color);
@@ -238,6 +243,13 @@ h2 {
   text-align: center;
   margin: auto;
 }
+.links-disabled {
+  color: gray;
+}
+.links-disabled:hover {
+  color: gray;
+  cursor: default;
+}
 
 /* ---  Footer --- */
 .footer {
@@ -246,7 +258,6 @@ h2 {
 }
 
 /* --- pageinate buttons ---*/
-
 .page-link {
   color: #000000 !important;
   background-color: var(--card-bg-color) !important;
@@ -293,18 +304,10 @@ h2 {
   .home-screen {
     margin: auto;
     text-align: center;
-    width: 90%;
-  }
-  .categories-div {
-    font-size: 78%;
-    width: 100%;
-  }
-  .cat-btn {
-    margin-left: -0.5rem;
-    margin-right: -0.5rem;
+    width: 97%;
   }
   .cart-img {
-    padding: 4rem;
+    padding: 2rem;
   }
   .product-image {
     padding: 2rem;
@@ -312,5 +315,35 @@ h2 {
   }
   .about-screen {
     width: 80%;
+  }
+  .links {
+    color: var(--nav-bg-color);
+    font-size: 60%;
+    margin-left: -5px;
+    margin-right: -5px;
+  }
+  .links-disabled {
+    color: gray;
+    font-size: 60%;
+    margin-left: -5px;
+    margin-right: -5px;
+  }
+
+  .categories-div {
+    font-size: 100%;
+    width: 100%;
+  }
+  .cat-btn {
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+  }
+}
+
+@media (max-width: 300px) {
+  .categories-div {
+    font-size: 80%;
+  }
+  .rating {
+    font-size: 70%;
   }
 }

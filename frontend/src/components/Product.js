@@ -9,13 +9,10 @@ const Product = ({ product }) => {
       {product.isPublished ? (
         <Card className='product'>
           <Link to={`/product/${product._id}`}>
-            <Card.Img
-              src={product.image}
-              style={{ padding: '3rem', marginTop: '-1rem' }}
-            />
+            <Card.Img src={product.image} style={{ padding: '1rem' }} />
           </Link>
 
-          <Card.Body style={{ marginTop: '-3rem' }}>
+          <Card.Body>
             <Link to={`/product/${product._id}`}>
               <Card.Title className='productTitle'>
                 <strong>{product.name}</strong>

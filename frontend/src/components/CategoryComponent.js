@@ -26,15 +26,15 @@ const Catagories = ({ history }) => {
         </LinkContainer>
 
         <LinkContainer to='/search/felt' activeClassName='activeButtons'>
-          <Nav.Link className='cat-btn'>Felt Work</Nav.Link>
+          <Nav.Link className='cat-btn'>Felt</Nav.Link>
         </LinkContainer>
 
         <LinkContainer to='/search/painting' activeClassName='activeButtons'>
-          <Nav.Link className='cat-btn'>Paintings</Nav.Link>
+          <Nav.Link className='cat-btn'>Painting</Nav.Link>
         </LinkContainer>
 
         <LinkContainer to='/search/beaded' activeClassName='activeButtons'>
-          <Nav.Link className='cat-btn'>Beaded</Nav.Link>
+          <Nav.Link className='cat-btn'>Bead</Nav.Link>
         </LinkContainer>
       </div>
     </Form>

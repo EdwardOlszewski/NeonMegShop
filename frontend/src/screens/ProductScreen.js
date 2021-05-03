@@ -93,7 +93,7 @@ const ProductScreen = ({ history, match }) => {
               >
                 <ListGroup variant='flush'>
                   <ListGroup.Item className='bg-color'>
-                    <h1>{product.name}</h1>
+                    <h5>{product.name}</h5>
                   </ListGroup.Item>
                   <ListGroup.Item className='bg-color'>
                     <Rating
@@ -122,17 +122,21 @@ const ProductScreen = ({ history, match }) => {
                         <Row>
                           <Col>Status:</Col>
                           <Col>
-                            {product.countInStock > 0
-                              ? 'In Stock'
-                              : 'Out Of Stock'}
+                            {product.countInStock > 0 ? (
+                              <strong>In Stock</strong>
+                            ) : (
+                              <strong>Out Of Stock</strong>
+                            )}
                           </Col>
                         </Row>
                       </ListGroup.Item>
 
                       <ListGroup.Item className='bg-color'>
                         <Row>
-                          <Col>Description:</Col>
-                          <Col>
+                          <Col sm={6} xl={6}>
+                            Description:
+                          </Col>
+                          <Col sm={6}>
                             <strong>{product.description}</strong>
                           </Col>
                         </Row>

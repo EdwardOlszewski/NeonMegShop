@@ -74,10 +74,10 @@ const OrderScreen = ({ match, history }) => {
       ) : error ? (
         <Message variant='danger'>{error}</Message>
       ) : (
-        <div style={{ width: '90%', margin: 'auto', textAlign: 'center' }}>
+        <div className='content-div'>
           <Row>
-            <Col sm={12} md={12} lg={12} xl={7} style={{ marginTop: '3rem' }}>
-              <Card className='card-content'>
+            <Col sm={12} md={12} lg={12} xl={7}>
+              <Card style={{ border: 'none' }}>
                 <ListGroup>
                   <ListGroup.Item
                     className='bg-color'
@@ -136,9 +136,9 @@ const OrderScreen = ({ match, history }) => {
               md={12}
               lg={8}
               xl={4}
-              style={{ textAlign: 'center', margin: 'auto', marginTop: '3rem' }}
+              style={{ textAlign: 'center', margin: 'auto' }}
             >
-              <Card className='card-content'>
+              <Card style={{ border: 'none' }}>
                 <ListGroup variant='flush' style={{ textAlign: 'center' }}>
                   <ListGroup.Item className='bg-color'>
                     <h2>Order Summary</h2>
@@ -167,7 +167,10 @@ const OrderScreen = ({ match, history }) => {
                       <Col>${order.totalPrice}</Col>
                     </Row>
                   </ListGroup.Item>
-                  <ListGroup.Item className='bg-color'>
+                  <ListGroup.Item
+                    className='bg-color'
+                    style={{ borderBottom: 'none' }}
+                  >
                     {order.isPaid ? (
                       <Message variant='success'>
                         Paid on: {' ' + DateFormat(order.paidAt)}

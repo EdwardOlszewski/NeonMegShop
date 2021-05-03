@@ -72,134 +72,138 @@ const PlaceOrderScreen = ({ history }) => {
       <Meta title='Review Order' />
       <CheckoutSteps step1 step2 step3 />
 
-      <Row style={{ marginTop: '2rem' }}>
-        <Col sm={12} md={12} lg={12} xl={7} style={{ marginBottom: '2rem' }}>
-          <Card className='card-content'>
-            <ListGroup variant='flush'>
-              <ListGroup.Item className='bg-color'>
-                <h2>Order Items</h2>
-                {cart.cartItems.length === 0 ? (
-                  <Message>Your cart is empty</Message>
-                ) : (
-                  <ListGroup variant='flush'>
-                    <ListGroup.Item className='bg-color'></ListGroup.Item>
-                    {cart.cartItems.map((item, index) => (
-                      <ListGroup.Item key={index} className='bg-color'>
-                        <Row>
-                          <Col md={2}>
-                            <Image
-                              src={item.image}
-                              alt={item.name}
-                              fluid
-                              rounded
-                            />
-                          </Col>
+      <div className='content-div'>
+        <Row style={{ marginTop: '2rem' }}>
+          <Col sm={12} md={12} lg={12} xl={7} style={{ marginBottom: '2rem' }}>
+            <Card style={{ border: 'none' }}>
+              <ListGroup variant='flush'>
+                <ListGroup.Item className='bg-color'>
+                  <h2>Order Items</h2>
+                  {cart.cartItems.length === 0 ? (
+                    <Message>Your cart is empty</Message>
+                  ) : (
+                    <ListGroup variant='flush'>
+                      <ListGroup.Item className='bg-color'></ListGroup.Item>
+                      {cart.cartItems.map((item, index) => (
+                        <ListGroup.Item key={index} className='bg-color'>
+                          <Row>
+                            <Col md={2}>
+                              <Image
+                                src={item.image}
+                                alt={item.name}
+                                fluid
+                                rounded
+                              />
+                            </Col>
 
-                          <Col md={5} style={{ marginTop: '2rem' }}>
-                            <Link
-                              className='links'
-                              to={`/product/${item.product}`}
-                              style={{ fontSize: '130%' }}
-                            >
-                              {item.name}
-                            </Link>
-                          </Col>
-                          <Col md={5}>
-                            <p style={{ marginTop: '2rem', fontSize: '130%' }}>
-                              {item.qty} x ${item.price} = $
-                              {item.qty * item.price}{' '}
-                            </p>
-                          </Col>
-                        </Row>
-                      </ListGroup.Item>
-                    ))}
+                            <Col md={5} style={{ marginTop: '2rem' }}>
+                              <Link
+                                className='links'
+                                to={`/product/${item.product}`}
+                                style={{ fontSize: '130%' }}
+                              >
+                                {item.name}
+                              </Link>
+                            </Col>
+                            <Col md={5}>
+                              <p
+                                style={{ marginTop: '2rem', fontSize: '130%' }}
+                              >
+                                {item.qty} x ${item.price} = $
+                                {item.qty * item.price}{' '}
+                              </p>
+                            </Col>
+                          </Row>
+                        </ListGroup.Item>
+                      ))}
 
-                    <ListGroup.Item className='bg-color'></ListGroup.Item>
-                  </ListGroup>
-                )}
-              </ListGroup.Item>
-            </ListGroup>
-          </Card>
-        </Col>
+                      <ListGroup.Item className='bg-color'></ListGroup.Item>
+                    </ListGroup>
+                  )}
+                </ListGroup.Item>
+              </ListGroup>
+            </Card>
+          </Col>
 
-        <Col
-          sm={12}
-          md={12}
-          lg={8}
-          xl={4}
-          style={{ textAlign: 'center', margin: 'auto' }}
-        >
-          <Card>
-            <ListGroup variant='flush'>
-              <ListGroup.Item className='bg-color'>
-                <h2>Shipping</h2>
-              </ListGroup.Item>
-              <ListGroup.Item className='bg-color'>
-                <Row>
-                  <Col>Address</Col>
-                  <Col>{cart.shippingAddress.address}</Col>
-                </Row>
-              </ListGroup.Item>
-              <ListGroup.Item className='bg-color'>
-                <Row>
-                  <Col>City</Col>
-                  <Col>{cart.shippingAddress.city}</Col>
-                </Row>
-              </ListGroup.Item>
-              <ListGroup.Item className='bg-color'>
-                <Row>
-                  <Col>Postal Code</Col>
-                  <Col>{cart.shippingAddress.postalCode}</Col>
-                </Row>
-              </ListGroup.Item>
-              <ListGroup.Item className='bg-color'>
-                <Row>
-                  <Col>Country</Col>
-                  <Col>{cart.shippingAddress.country}</Col>
-                </Row>
-              </ListGroup.Item>
-            </ListGroup>
-          </Card>
+          <Col
+            sm={12}
+            md={12}
+            lg={8}
+            xl={4}
+            style={{ textAlign: 'center', margin: 'auto' }}
+          >
+            <Card style={{ border: 'none' }}>
+              <ListGroup variant='flush'>
+                <ListGroup.Item className='bg-color'>
+                  <h2>Shipping</h2>
+                </ListGroup.Item>
+                <ListGroup.Item className='bg-color'>
+                  <Row>
+                    <Col>Address</Col>
+                    <Col>{cart.shippingAddress.address}</Col>
+                  </Row>
+                </ListGroup.Item>
+                <ListGroup.Item className='bg-color'>
+                  <Row>
+                    <Col>City</Col>
+                    <Col>{cart.shippingAddress.city}</Col>
+                  </Row>
+                </ListGroup.Item>
+                <ListGroup.Item className='bg-color'>
+                  <Row>
+                    <Col>Postal Code</Col>
+                    <Col>{cart.shippingAddress.postalCode}</Col>
+                  </Row>
+                </ListGroup.Item>
+                <ListGroup.Item className='bg-color'>
+                  <Row>
+                    <Col>Country</Col>
+                    <Col>{cart.shippingAddress.country}</Col>
+                  </Row>
+                </ListGroup.Item>
+              </ListGroup>
+            </Card>
 
-          <Card style={{ marginTop: '3rem' }}>
-            <ListGroup variant='flush'>
-              <ListGroup.Item className='bg-color'>
-                <h2>Order Summary</h2>
-              </ListGroup.Item>
-              <ListGroup.Item className='bg-color'>
-                <Row>
-                  <Col>Items</Col>
-                  <Col>${cart.itemsPrice}</Col>
-                </Row>
-              </ListGroup.Item>
-              <ListGroup.Item className='bg-color'>
-                <Row>
-                  <Col>Tax</Col>
-                  <Col>${cart.taxPrice}</Col>
-                </Row>
-              </ListGroup.Item>
-              <ListGroup.Item className='bg-color'>
-                <Row>
-                  <Col>Total</Col>
-                  <Col>${cart.totalPrice}</Col>
-                </Row>
-              </ListGroup.Item>
+            <Card style={{ marginTop: '3rem', border: 'none' }}>
+              <ListGroup variant='flush'>
+                <ListGroup.Item className='bg-color'>
+                  <h2>Order Summary</h2>
+                </ListGroup.Item>
+                <ListGroup.Item className='bg-color'>
+                  <Row>
+                    <Col>Items</Col>
+                    <Col>${cart.itemsPrice}</Col>
+                  </Row>
+                </ListGroup.Item>
+                <ListGroup.Item className='bg-color'>
+                  <Row>
+                    <Col>Tax</Col>
+                    <Col>${cart.taxPrice}</Col>
+                  </Row>
+                </ListGroup.Item>
+                <ListGroup.Item className='bg-color'>
+                  <Row>
+                    <Col>Total</Col>
+                    <Col>${cart.totalPrice}</Col>
+                  </Row>
+                </ListGroup.Item>
 
-              <ListGroup.Item className='bg-color'>
-                <Button
-                  type='button'
-                  className='btn'
-                  style={{ width: '100%' }}
-                  disabled={cart.cartItems === 0}
-                  onClick={placeOrderHandler}
-                >
-                  Proceed With Order
-                </Button>
-              </ListGroup.Item>
-            </ListGroup>
-          </Card>
-        </Col>
-      </Row>
+                <ListGroup.Item className='bg-color'>
+                  <Button
+                    type='button'
+                    className='btn'
+                    style={{ width: '100%' }}
+                    disabled={cart.cartItems === 0}
+                    onClick={placeOrderHandler}
+                  >
+                    Proceed With Order
+                  </Button>
+                </ListGroup.Item>
+              </ListGroup>
+            </Card>
+          </Col>
+        </Row>
+      </div>
     </div>
   )
 }

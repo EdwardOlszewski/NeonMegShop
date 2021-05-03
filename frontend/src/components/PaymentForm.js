@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Col } from 'react-bootstrap'
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import { useSelector, useDispatch } from 'react-redux'
 import { cardCharge } from '../actions/orderActions'

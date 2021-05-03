@@ -81,7 +81,7 @@ const PaymentScreen = ({ match, history }) => {
   }, [dispatch, orderId, order, history, userInfo, chargeSuccess])
 
   return (
-    <Container>
+    <div>
       <Elements stripe={stripePromise}></Elements>
       {loading || chargeLoading ? (
         <Loader />
@@ -91,7 +91,7 @@ const PaymentScreen = ({ match, history }) => {
         <Message variant='danger'>AlreadyPaid</Message>
       ) : (
         <FormContainer>
-          <Meta title='Shipping' />
+          <Meta title='Payment' />
           <CheckoutSteps step1 step2 step3 step4 />
 
           <Card className='card-content' style={{ marginTop: '2rem' }}>
@@ -109,10 +109,10 @@ const PaymentScreen = ({ match, history }) => {
                 >
                   <Form.Label>First Name</Form.Label>
                   <Form.Control
+                    required
                     type='text'
                     placeholder='First Name'
                     value={firstName}
-                    required
                     onChange={(e) => setFirstName(e.target.value)}
                   ></Form.Control>
                 </Form.Group>
@@ -182,6 +182,8 @@ const PaymentScreen = ({ match, history }) => {
                   ></Form.Control>
                 </Form.Group>
               </Row>
+
+              {}
               <Elements stripe={stripePromise}>
                 <PaymentForm
                   billingDetails={billingDetails}
@@ -192,7 +194,8 @@ const PaymentScreen = ({ match, history }) => {
           </Card>
         </FormContainer>
       )}
-    </Container>
+      <div style={{ paddingTop: '10rem' }}></div>
+    </div>
   )
 }
 

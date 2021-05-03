@@ -52,7 +52,7 @@ const CartScreen = ({ match, location, history }) => {
         </Container>
       ) : (
         <>
-          <Col md={8}>
+          <Col md={12} lg={9}>
             <ListGroup
               variant='flush'
               style={{ borderRadius: '2px', marginBottom: '1rem' }}
@@ -72,25 +72,26 @@ const CartScreen = ({ match, location, history }) => {
                         rounded
                       />
                     </Col>
-                    <Col xs={3} md={3}>
+
+                    <Col xs={12} md={3}>
                       <div className='space'></div>
                       <Link
                         className='links'
-                        style={{ fontSize: '120%' }}
+                        style={{ fontSize: '100%' }}
                         to={`/product/${item.product}`}
                       >
                         {item.name}
                       </Link>
                     </Col>
 
-                    <Col xs={2} md={2}>
+                    <Col xs={3} md={2}>
                       <div className='space'></div>
                       <p style={{ fontSize: '120%', color: 'black' }}>
                         ${item.price}
                       </p>
                     </Col>
 
-                    <Col xs={4} md={3}>
+                    <Col xs={6} md={3}>
                       <div className='space'></div>
                       <Form.Control
                         as='select'
@@ -124,7 +125,7 @@ const CartScreen = ({ match, location, history }) => {
               ))}
             </ListGroup>
           </Col>
-          <Col md={4}>
+          <Col md={12} lg={3}>
             <Card>
               <ListGroup variant='flush' style={{ borderRadius: '2px' }}>
                 <ListGroup.Item
