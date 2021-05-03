@@ -94,6 +94,7 @@ const OrderScreen = ({ match, history }) => {
                             <Row>
                               <Col md={2}>
                                 <Image
+                                  className='cart-img'
                                   src={item.image}
                                   alt={item.name}
                                   fluid
@@ -101,16 +102,16 @@ const OrderScreen = ({ match, history }) => {
                                 />
                               </Col>
 
-                              <Col xs={5} md={5} style={{ marginTop: '3rem' }}>
+                              <Col xs={12} md={5} style={{ marginTop: '3rem' }}>
                                 <Link
                                   className='links'
                                   to={`/product/${item.product}`}
-                                  style={{ fontSize: '130%' }}
+                                  style={{ fontSize: '100%' }}
                                 >
                                   {item.name}
                                 </Link>
                               </Col>
-                              <Col xs={7} md={5}>
+                              <Col xs={12} md={5}>
                                 <p
                                   style={{
                                     marginTop: '3rem',
@@ -151,19 +152,19 @@ const OrderScreen = ({ match, history }) => {
                   </ListGroup.Item>
                   <ListGroup.Item className='bg-color'>
                     <Row>
-                      <Col>Items</Col>
+                      <Col>Items:</Col>
                       <Col>${order.itemsPrice}</Col>
                     </Row>
                   </ListGroup.Item>
                   <ListGroup.Item className='bg-color'>
                     <Row>
-                      <Col>Tax</Col>
+                      <Col>Tax:</Col>
                       <Col>${order.taxPrice}</Col>
                     </Row>
                   </ListGroup.Item>
                   <ListGroup.Item className='bg-color'>
                     <Row>
-                      <Col>Total</Col>
+                      <Col>Total:</Col>
                       <Col>${order.totalPrice}</Col>
                     </Row>
                   </ListGroup.Item>
@@ -186,19 +187,19 @@ const OrderScreen = ({ match, history }) => {
                     </ListGroup.Item>
                     <ListGroup.Item className='bg-color'>
                       <Row>
-                        <Col>Name</Col>
+                        <Col>Name:</Col>
                         <Col>{order.user.name}</Col>
                       </Row>
                     </ListGroup.Item>
                     <ListGroup.Item className='bg-color'>
                       <Row>
-                        <Col>Email</Col>
+                        <Col>Email:</Col>
                         <Col>{order.user.email}</Col>
                       </Row>
                     </ListGroup.Item>
                     <ListGroup.Item className='bg-color'>
                       <Row>
-                        <Col>Address</Col>
+                        <Col>Address:</Col>
                         <Col>
                           {order.shippingAddress.address},{' '}
                           {order.shippingAddress.city}{' '}

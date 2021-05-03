@@ -76,7 +76,7 @@ const ProductScreen = ({ history, match }) => {
           <Meta title={product.name} />
           <Card className='card-content'>
             <Row>
-              <Col sm={12} md={12} lg={12} xl={5}>
+              <Col sm={12} lg={5}>
                 <Image
                   className='product-image'
                   src={product.image}
@@ -87,8 +87,7 @@ const ProductScreen = ({ history, match }) => {
 
               <Col
                 md={12}
-                lg={9}
-                xl={5}
+                lg={5}
                 style={{ margin: 'auto', textAlign: 'center' }}
               >
                 <ListGroup variant='flush'>
