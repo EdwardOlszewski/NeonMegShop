@@ -280,7 +280,7 @@ h2 {
   height: 40px;
 }
 
-@media (max-width: 550px) {
+@media (max-width: 600px) {
   .carousel-caption h2 {
     font-size: 2.5vw;
   }
