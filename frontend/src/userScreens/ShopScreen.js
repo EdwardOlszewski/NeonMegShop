@@ -1,33 +1,39 @@
+// Dependencies
 import React, { useEffect } from 'react'
-
 import { useDispatch, useSelector } from 'react-redux'
+// Actions
+import { listProducts } from '../actions/productActions'
+//Components
 import { Row, Col, Card } from 'react-bootstrap'
 import Product from '../components/Product'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import Paginate from '../components/Paginate'
 import CategoryComponent from '../components/CategoryComponent'
-
 import Meta from '../components/Meta'
-import { listProducts } from '../actions/productActions'
 
-const HomeScreen = ({ match }) => {
-  const keyword = match.params.keyword
-
-  const pageNumber = match.params.pageNumber || 1
-
+const ShopScreen = ({ match }) => {
+  // Assign useDispatch hook
   const dispatch = useDispatch()
 
+  // Get keyword from the URL
+  const keyword = match.params.keyword
+
+  // Get pagenumber from the URL
+  const pageNumber = match.params.pageNumber || 1
+
+  // Pull data from the redux store
   const productList = useSelector((state) => state.productList)
   const { loading, error, products, page, pages } = productList
 
+  // useEffect hook
   useEffect(() => {
     dispatch(listProducts(keyword, pageNumber))
   }, [dispatch, keyword, pageNumber])
 
   return (
     <div className='home-screen'>
-      <Meta />
+      <Meta title={'Shop'} />
       {loading ? (
         <Loader />
       ) : error ? (
@@ -68,4 +74,4 @@ const HomeScreen = ({ match }) => {
   )
 }
 
-export default HomeScreen
+export default ShopScreen

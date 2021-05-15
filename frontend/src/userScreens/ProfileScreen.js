@@ -1,22 +1,30 @@
+// Dependencies
 import React, { useState, useEffect } from 'react'
-import { Table, Form, Button, Row, Col, Card } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import Message from '../components/Message'
-import Loader from '../components/Loader'
+// Actions
 import { getUserDetails, updateUserProfile } from '../actions/userActions'
 import { listMyOrders } from '../actions/orderActions'
 import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
+// Components
+import { Table, Form, Button, Row, Col, Card } from 'react-bootstrap'
+import Message from '../components/Message'
+import Loader from '../components/Loader'
+import Meta from '../components/Meta'
 
 const ProfileScreen = ({ location, history }) => {
-  const [name, setName] = useState('')
+  // Assign useDispatch hook
+  const dispatch = useDispatch()
+
+  // Create stateful values and functions
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [message, setMessage] = useState(null)
 
-  const dispatch = useDispatch()
-
+  // Pull data from the redux store
   const userDetails = useSelector((state) => state.userDetails)
   const { loading, error, user } = userDetails
 
@@ -29,35 +37,45 @@ const ProfileScreen = ({ location, history }) => {
   const orderListMy = useSelector((state) => state.orderListMy)
   const { loading: loadingOrders, error: errorOrders, orders } = orderListMy
 
-  useEffect(() => {
-    if (!userInfo) {
-      history.push('/login')
-    } else {
-      if (!user || !user.name || success) {
-        dispatch({ type: USER_UPDATE_PROFILE_RESET })
-        dispatch(getUserDetails('profile'))
-        dispatch(listMyOrders())
-      } else {
-        setName(user.name)
-        setEmail(user.email)
-      }
-    }
-  }, [dispatch, history, userInfo, user, success])
-
+  // Function called on submit
   const submitHandler = (e) => {
     e.preventDefault()
     if (password !== confirmPassword) {
       setMessage('Passwords do not match')
     } else {
-      dispatch(updateUserProfile({ id: user._id, name, email, password }))
+      dispatch(
+        updateUserProfile({
+          id: user._id,
+          firstName,
+          lastName,
+          email,
+          password,
+        })
+      )
     }
   }
 
+  useEffect(() => {
+    if (!userInfo) {
+      history.push('/login')
+    } else {
+      if (!user || !user.firstName || success) {
+        dispatch({ type: USER_UPDATE_PROFILE_RESET })
+        dispatch(getUserDetails('profile'))
+        dispatch(listMyOrders())
+      } else {
+        setFirstName(user.firstName)
+        setLastName(user.lastName)
+        setEmail(user.email)
+      }
+    }
+  }, [dispatch, history, userInfo, user, success])
+
   return (
     <Row>
+      <Meta title={'Profile'} />
       <Col md={3} style={{ marginTop: '2rem' }}>
         {message && <Message variant='danger'>{message}</Message>}
-        {}
         {success && <Message variant='success'>Profile Updated</Message>}
         {loading ? (
           <Loader />
@@ -67,13 +85,23 @@ const ProfileScreen = ({ location, history }) => {
           <Card className='card-content'>
             <h2>User Profile</h2>
             <Form onSubmit={submitHandler}>
-              <Form.Group controlId='name'>
-                <Form.Label>Name</Form.Label>
+              <Form.Group controlId='firstName'>
+                <Form.Label>First Name</Form.Label>
                 <Form.Control
-                  type='name'
-                  placeholder='Enter name'
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  type='firstName'
+                  placeholder='Enter First Name'
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+
+              <Form.Group controlId='lastName'>
+                <Form.Label>Last Name</Form.Label>
+                <Form.Control
+                  type='lastName'
+                  placeholder='Enter Last Name'
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
                 ></Form.Control>
               </Form.Group>
 

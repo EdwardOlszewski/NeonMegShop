@@ -1,10 +1,14 @@
+// Dependencies
 import React, { useState } from 'react'
-import { Form, ListGroupItem, Nav } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
+// Components
+import { Form, Nav } from 'react-bootstrap'
 
 const Catagories = ({ history }) => {
+  // Create stateful values and functions
   const [keyword] = useState('')
 
+  // Function called on submit
   const submitHandler = (e) => {
     e.preventDefault()
     if (keyword.trim()) {
@@ -42,17 +46,3 @@ const Catagories = ({ history }) => {
 }
 
 export default Catagories
-
-/*
-<Card.Text>
-                <Button
-                  className='catagories-button'
-                  type='submit'
-                  name='all'
-                  value=''
-                  onClick={(e) => setKeyword(e.target.value)}
-                >
-                  All
-                </Button>
-              </Card.Text>
-              */

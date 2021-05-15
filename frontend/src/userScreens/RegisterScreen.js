@@ -1,43 +1,62 @@
+// Dependencies
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Form, Button, Row, Col, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
+// Actions
+import { register } from '../actions/userActions'
+import { sendRegisterEmail } from '../actions/emailActions'
+// Components
+import { Form, Button, Row, Col, Card } from 'react-bootstrap'
+import FormContainer from '../components/FormContainer'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import FormContainer from '../components/FormContainer'
-import { register } from '../actions/userActions'
+import Meta from '../components/Meta'
 
 const RegisterScreen = ({ location, history }) => {
-  const [name, setName] = useState('')
+  // Assign useDispatch hook
+  const dispatch = useDispatch()
+
+  // Get redirect from the URL
+  const redirect = location.search ? location.search.split('=')[1] : '/'
+
+  // Create stateful values and functions
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [message, setMessage] = useState(null)
 
-  const dispatch = useDispatch()
-
+  // Pull data from the redux store
   const userRegister = useSelector((state) => state.userRegister)
-  const { loading, error, userInfo } = userRegister
+  const { loading, error, success, userInfo } = userRegister
 
-  const redirect = location.search ? location.search.split('=')[1] : '/'
+  // Function called on submit
+  const submitHandler = (e) => {
+    e.preventDefault()
+    if (!password || !firstName || !lastName || !email) {
+      setMessage('Must fill out entire form.')
+    } else if (password !== confirmPassword) {
+      setMessage('Passwords do not match')
+    } else {
+      dispatch(register(firstName, lastName, email, password))
+    }
+  }
 
   useEffect(() => {
     if (userInfo) {
       history.push(redirect)
     }
-  }, [history, userInfo, redirect])
-
-  const submitHandler = (e) => {
-    e.preventDefault()
-    if (password !== confirmPassword) {
-      setMessage('Passwords do not match')
-    } else {
-      dispatch(register(name, email, password))
+    if (success) {
+      const name = userInfo.firstName + ' ' + userInfo.lastName
+      const email = userInfo.email
+      dispatch(sendRegisterEmail(name, email))
     }
-  }
+  }, [history, userInfo, redirect, success])
 
   return (
     <FormContainer>
+      <Meta title={'Register'} />
       <div style={{ marginTop: '3rem' }}></div>
       <Card className='card-content'>
         <h1>Sign Up</h1>
@@ -46,12 +65,22 @@ const RegisterScreen = ({ location, history }) => {
         {loading && <Loader />}
         <Form onSubmit={submitHandler}>
           <Form.Group controlId='name'>
-            <Form.Label>Name</Form.Label>
+            <Form.Label>First Name</Form.Label>
             <Form.Control
-              type='name'
-              placeholder='Enter name'
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              type='firstName'
+              placeholder='Enter First Name'
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+
+          <Form.Group controlId='last name'>
+            <Form.Label>Last Name</Form.Label>
+            <Form.Control
+              type='lastName'
+              placeholder='Enter Last Name'
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
             ></Form.Control>
           </Form.Group>
 

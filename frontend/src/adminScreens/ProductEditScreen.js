@@ -1,16 +1,25 @@
-import axios from 'axios'
+// Dependencies
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import Message from '../components/Message'
-import Loader from '../components/Loader'
-import FormContainer from '../components/FormContainer'
+// Actions
 import { listProductDetails, updateProduct } from '../actions/productActions'
 import { PRODUCT_UPDATE_RESET } from '../constants/productConstants'
+import { uploadImage } from '../actions/imageActions'
+// Components
+import { Form, Button, Card } from 'react-bootstrap'
+import FormContainer from '../components/FormContainer'
+import Message from '../components/Message'
+import Loader from '../components/Loader'
+import Meta from '../components/Meta'
 
 const ProductEditScreen = ({ match, history }) => {
+  // Assign useDispatch hook
+  const dispatch = useDispatch()
+
+  // Get the product ID from the url
   const productId = match.params.id
 
+  // Create stateful values and functions
   const [name, setName] = useState('')
   const [price, setPrice] = useState(0)
   const [image, setImage] = useState('')
@@ -18,10 +27,9 @@ const ProductEditScreen = ({ match, history }) => {
   const [countInStock, setCountInStock] = useState(0)
   const [category, setCategory] = useState('')
   const [description, setDescription] = useState('')
-  const [uploading, setUploading] = useState(false)
+  const [fileName, setFileName] = useState('Choose an image to upload...')
 
-  const dispatch = useDispatch()
-
+  // Pull data from the redux store
   const productDetails = useSelector((state) => state.productDetails)
   const { loading, error, product } = productDetails
 
@@ -32,47 +40,24 @@ const ProductEditScreen = ({ match, history }) => {
     success: successUpdate,
   } = productUpdate
 
-  useEffect(() => {
-    if (successUpdate) {
-      dispatch({ type: PRODUCT_UPDATE_RESET })
-      history.push('/admin/productlist')
-    } else {
-      if (!product.name || product._id !== productId) {
-        dispatch(listProductDetails(productId))
-      } else {
-        setName(product.name)
-        setPrice(product.price)
-        setImage(product.image)
-        setCountInStock(product.countInStock)
-        setCategory(product.category)
-        setDescription(product.description)
-        setIsPublished(product.isPublished)
-      }
-    }
-  }, [dispatch, history, productId, product, successUpdate])
+  const imageUpload = useSelector((state) => state.imageUpload)
+  const {
+    loading: loadingImg,
+    error: errorImg,
+    success: successImg,
+    imageURL,
+  } = imageUpload
 
-  // function to upload image on submit
-  const uploadFileHandler = async ({ target: { id, files } }) => {
-    const file = files[0]
-    const formData = new FormData()
-    formData.append('image', file)
-    setUploading(true)
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }
-      const { data } = await axios.post('/api/upload', formData, config)
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
 
-      setImage(data)
-      setUploading(false)
-    } catch (error) {
-      console.error(error)
-      setUploading(false)
-    }
+  // Function to upload Image on submit
+  const uploadImageHandler = async ({ target: { files } }) => {
+    setFileName(files[0].name)
+    dispatch(uploadImage(files[0]))
   }
 
+  // Function called on form submit
   const submitHandler = (e) => {
     e.preventDefault()
     dispatch(
@@ -89,8 +74,42 @@ const ProductEditScreen = ({ match, history }) => {
     )
   }
 
+  // useEffect hook
+  useEffect(() => {
+    if (!userInfo || !userInfo.isAdmin) {
+      history.push('/login')
+    } else if (successUpdate) {
+      dispatch({ type: PRODUCT_UPDATE_RESET })
+      history.push('/admin/productlist')
+    } else if (successImg) {
+      setImage(imageURL)
+    } else {
+      if (!product.name || product._id !== productId) {
+        dispatch(listProductDetails(productId))
+      } else {
+        setName(product.name)
+        setPrice(product.price)
+        setImage(product.image)
+        setCountInStock(product.countInStock)
+        setCategory(product.category)
+        setDescription(product.description)
+        setIsPublished(product.isPublished)
+      }
+    }
+  }, [
+    dispatch,
+    history,
+    productId,
+    product,
+    successUpdate,
+    successImg,
+    imageURL,
+    userInfo,
+  ])
+
   return (
     <FormContainer>
+      <Meta title={'Product Edit Screen'} />
       <Card className='card-content'>
         <h1>Edit Product</h1>
         {loadingUpdate && <Loader />}
@@ -125,11 +144,12 @@ const ProductEditScreen = ({ match, history }) => {
               <Form.Label>Image</Form.Label>
               <Form.File
                 id='image-file'
-                label='Choose File'
+                label={fileName}
                 custom
-                onChange={uploadFileHandler}
+                onChange={uploadImageHandler}
               ></Form.File>
-              {uploading && <Loader />}
+              {loadingImg && <Loader />}
+              {errorImg && <Message variant='danger'>{errorImg}</Message>}
             </Form.Group>
 
             <Form.Group controlId='countInStock'>
@@ -176,11 +196,11 @@ const ProductEditScreen = ({ match, history }) => {
                 onChange={(e) => setIsPublished(e.target.checked)}
               ></Form.Check>
             </Form.Group>
-
-            <div className='space'></div>
             <Button type='submit' variant='primary'>
               Update
             </Button>
+
+            <div className='space'></div>
           </Form>
         )}
       </Card>

@@ -1,13 +1,17 @@
+// Dependencies
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Modal, Button, Form } from 'react-bootstrap'
+// Actions
 import { createProductReview } from '../actions/productActions'
+//Components
+import { Modal, Button, Form } from 'react-bootstrap'
 import Loader from '../components/Loader'
 
 const ReviewModal = ({ ID, match }) => {
   // Assign useDispatch hook to dispatch actions
   const dispatch = useDispatch()
 
+  // Create stateful values and functions
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState('')
   const [show, setShow] = useState(false)
@@ -15,9 +19,11 @@ const ReviewModal = ({ ID, match }) => {
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
+  // Pull data from the redux store
   const productReviewCreate = useSelector((state) => state.productReviewCreate)
   const { success, loading } = productReviewCreate
 
+  // Function called on submit
   const submitHandler = (e) => {
     e.preventDefault()
     dispatch(

@@ -16,6 +16,7 @@
   "author": "Edward Olszewski",
   "license": "MIT",
   "dependencies": {
+    "@sendgrid/mail": "^7.4.2",
     "@stripe/react-stripe-js": "^1.2.0",
     "@stripe/stripe-js": "^1.11.0",
     "aws-sdk": "^2.874.0",
@@ -29,6 +30,7 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
     "multer-s3": "^2.9.0",
+    "sib-api-v3-sdk": "^8.2.0",
     "stripe": "^8.131.1"
   },
   "devDependencies": {

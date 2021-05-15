@@ -1,6 +1,10 @@
+// Dependencies
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+// Actions
+import { addToCart, removeFromCart } from '../actions/cartActions'
+// Components
 import {
   Row,
   Col,
@@ -12,34 +16,42 @@ import {
   Container,
 } from 'react-bootstrap'
 import Message from '../components/Message'
-import { addToCart, removeFromCart } from '../actions/cartActions'
+import Meta from '../components/Meta'
 
 const CartScreen = ({ match, location, history }) => {
-  const productId = match.params.id
-
-  const qty = location.search ? Number(location.search.split('=')[1]) : 1
-
+  // Assign useDispatch hook
   const dispatch = useDispatch()
 
+  // Get productID from the url
+  const productId = match.params.id
+
+  // Get qty from url
+  const qty = location.search ? Number(location.search.split('=')[1]) : 1
+
+  // Pull data from the redux store
   const cart = useSelector((state) => state.cart)
   const { cartItems } = cart
 
+  // Function called when remove button clicked
+  const removeFromCartHandler = (id) => {
+    dispatch(removeFromCart(id))
+  }
+
+  // Function called on submit
+  const checkoutHandler = () => {
+    history.push('/login?redirect=shipping')
+  }
+
+  // useEffect Hook
   useEffect(() => {
     if (productId) {
       dispatch(addToCart(productId, qty))
     }
   }, [dispatch, productId, qty])
 
-  const removeFromCartHandler = (id) => {
-    dispatch(removeFromCart(id))
-  }
-
-  const checkoutHandler = () => {
-    history.push('/login?redirect=shipping')
-  }
-
   return (
     <Row style={{ marginTop: '1rem' }}>
+      <Meta title={'Cart'} />
       {cartItems.length === 0 ? (
         <Container>
           <Col style={{ marginBottom: '2rem' }}>
@@ -166,18 +178,3 @@ const CartScreen = ({ match, location, history }) => {
 }
 
 export default CartScreen
-
-/*
-
-{cartItems.length === 0 ? (
-          <div style={{ marginBottom: '2rem' }}>
-            <Card className='card-content'>
-              <Message>
-                Your cart is empty <Link to='/shop'>Go Back</Link>
-              </Message>
-            </Card>
-          </div>
-        ) : (
-
-
-          */

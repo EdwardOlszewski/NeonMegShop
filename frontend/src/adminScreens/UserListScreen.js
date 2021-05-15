@@ -1,39 +1,48 @@
+// Dependencies
 import React, { useEffect } from 'react'
-import { LinkContainer } from 'react-router-bootstrap'
-import { Table, Button, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
+import { LinkContainer } from 'react-router-bootstrap'
+// Actions
+import { listUsers, deleteUser } from '../actions/userActions'
+// Components
+import { Table, Button, Card } from 'react-bootstrap'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { listUsers, deleteUser } from '../actions/userActions'
+import Meta from '../components/Meta'
 
 const UserListScreen = ({ history }) => {
+  // Assign useDispatch hook
   const dispatch = useDispatch()
 
+  // Pull data from the redux store
   const userList = useSelector((state) => state.userList)
   const { loading, error, users } = userList
-
-  const userLogin = useSelector((state) => state.userLogin)
-  const { userInfo } = userLogin
 
   const userDelete = useSelector((state) => state.userDelete)
   const { success: successDelete } = userDelete
 
-  useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(listUsers())
-    } else {
-      history.push('/login')
-    }
-  }, [dispatch, history, successDelete, userInfo])
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
 
+  // Function called when delete button clicked
   const deleteHandler = (id) => {
     if (window.confirm('Are you sure')) {
       dispatch(deleteUser(id))
     }
   }
 
+  // useEffect hook
+  useEffect(() => {
+    if (!userInfo || !userInfo.isAdmin) {
+      history.push('/login')
+    } else {
+      dispatch(listUsers())
+    }
+  }, [dispatch, history, successDelete, userInfo])
+
   return (
     <Card className='card-content'>
+      <Meta title={'User List Screen'} />
       <h1>Users</h1>
       {loading ? (
         <Loader />
@@ -51,7 +60,8 @@ const UserListScreen = ({ history }) => {
           <thead>
             <tr>
               <th>ID</th>
-              <th>NAME</th>
+              <th>FIRST NAME</th>
+              <th>LAST NAME</th>
               <th>EMAIL</th>
               <th>ADMIN</th>
               <th></th>
@@ -61,7 +71,8 @@ const UserListScreen = ({ history }) => {
             {users.map((user) => (
               <tr key={user._id}>
                 <td>{user._id}</td>
-                <td>{user.name}</td>
+                <td>{user.firstName}</td>
+                <td>{user.lastName}</td>
                 <td>
                   <a className='links' href={`mailto:${user.email}`}>
                     {user.email}

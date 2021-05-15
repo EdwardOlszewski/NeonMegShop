@@ -1,24 +1,27 @@
 import React from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
+//User Screens
 import Header from './components/Header'
 import Footer from './components/Footer'
-import HomeScreen from './screens/HomeScreen'
-import ProductScreen from './screens/ProductScreen'
-import CartScreen from './screens/CartScreen'
-import LoginScreen from './screens/LoginScreen'
-import RegisterScreen from './screens/RegisterScreen'
-import ProfileScreen from './screens/ProfileScreen'
-import ShippingScreen from './screens/ShippingScreen'
-import PaymentScreen from './screens/PaymentScreen'
-import PlaceOrderScreen from './screens/PlaceOrderScreen'
-import AboutScreen from './screens/AboutMeScreen'
-import OrderScreen from './screens/OrderScreen'
-import UserListScreen from './screens/UserListScreen'
-import UserEditScreen from './screens/UserEditScreen'
-import ProductListScreen from './screens/ProductListScreen'
-import ProductEditScreen from './screens/ProductEditScreen'
-import OrderListScreen from './screens/OrderListScreen'
+import ShopScreen from './userScreens/ShopScreen'
+import ProductScreen from './userScreens/ProductScreen'
+import CartScreen from './userScreens/CartScreen'
+import LoginScreen from './userScreens/LoginScreen'
+import RegisterScreen from './userScreens/RegisterScreen'
+import ProfileScreen from './userScreens/ProfileScreen'
+import ShippingScreen from './userScreens/ShippingScreen'
+import PaymentScreen from './userScreens/PaymentScreen'
+import PlaceOrderScreen from './userScreens/PlaceOrderScreen'
+import AboutScreen from './userScreens/AboutMeScreen'
+import OrderScreen from './userScreens/OrderScreen'
+
+//Admin Screens
+import UserListScreen from './adminScreens/UserListScreen'
+import UserEditScreen from './adminScreens/UserEditScreen'
+import ProductListScreen from './adminScreens/ProductListScreen'
+import ProductEditScreen from './adminScreens/ProductEditScreen'
+import OrderListScreen from './adminScreens/OrderListScreen'
 
 const App = () => {
   return (
@@ -52,14 +55,14 @@ const App = () => {
           <Route path='/' component={AboutScreen} exact />
         </div>
         <div>
-          <Route path='/search/:keyword' component={HomeScreen} exact />
-          <Route path='/page/:pageNumber' component={HomeScreen} exact />
+          <Route path='/search/:keyword' component={ShopScreen} exact />
+          <Route path='/page/:pageNumber' component={ShopScreen} exact />
           <Route
             path='/search/:keyword/page/:pageNumber'
-            component={HomeScreen}
+            component={ShopScreen}
             exact
           />
-          <Route path='/shop' component={HomeScreen} exact />
+          <Route path='/shop' component={ShopScreen} exact />
         </div>
       </main>
       <Footer />

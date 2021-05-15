@@ -1,16 +1,22 @@
+// Dependencies
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Navbar, Nav, NavDropdown, Image } from 'react-bootstrap'
+// Actions
 import { logout } from '../actions/userActions'
+// Components
+import { Navbar, Nav, NavDropdown, Image } from 'react-bootstrap'
 import logoIMG from '../images/logo.png'
 
 const Header = () => {
+  // Assign useDispatch hook
   const dispatch = useDispatch()
 
+  // Pull data from the redux store
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
+  // Function called on submit
   const logoutHandler = () => {
     dispatch(logout())
   }
@@ -44,7 +50,7 @@ const Header = () => {
                 </Nav.Link>
               </LinkContainer>
               {userInfo ? (
-                <NavDropdown title={userInfo.name} id='username'>
+                <NavDropdown title={userInfo.firstName} id='username'>
                   <LinkContainer to='/profile'>
                     <NavDropdown.Item>Profile</NavDropdown.Item>
                   </LinkContainer>

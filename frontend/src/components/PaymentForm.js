@@ -1,15 +1,21 @@
+// Dependencies
 import React from 'react'
-import { Form, Button, Col } from 'react-bootstrap'
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import { useSelector, useDispatch } from 'react-redux'
-import { cardCharge } from '../actions/orderActions'
 import Loader from '../components/Loader'
+// Actions
+import { cardCharge } from '../actions/orderActions'
+// Components
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
+import { Form, Button } from 'react-bootstrap'
 
 const PaymentForm = ({ updateBillingInfo, billingDetails, history }) => {
-  const stripe = useStripe()
-  const elements = useElements()
+  // Assign useDispatch hook
   const dispatch = useDispatch()
 
+  const stripe = useStripe()
+  const elements = useElements()
+
+  // Pull data from the redux store
   const orderDetails = useSelector((state) => state.orderDetails)
   const { order } = orderDetails
 
@@ -19,6 +25,7 @@ const PaymentForm = ({ updateBillingInfo, billingDetails, history }) => {
   const orderPay = useSelector((state) => state.orderPay)
   const { loading: orderPayLoading } = orderPay
 
+  // Function called on submit
   const handleSubmit = async (e) => {
     e.preventDefault()
     const { error, paymentMethod } = await stripe.createPaymentMethod({

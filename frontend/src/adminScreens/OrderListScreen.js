@@ -1,20 +1,27 @@
+// Dependencies
 import React, { useEffect } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Table, Button, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
+// Actions
+import { listOrders } from '../actions/orderActions'
+// Components
+import { Table, Button, Card } from 'react-bootstrap'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { listOrders } from '../actions/orderActions'
+import Meta from '../components/Meta'
 
 const OrderListScreen = ({ history }) => {
+  // Assign useDispatch hook
   const dispatch = useDispatch()
 
+  // Pull data from the redux store
   const orderList = useSelector((state) => state.orderList)
   const { loading, error, orders } = orderList
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
+  // useEffect hook
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
       dispatch(listOrders())
@@ -25,6 +32,7 @@ const OrderListScreen = ({ history }) => {
 
   return (
     <Card className='card-content'>
+      <Meta title={'Order List Screen'} />
       <h1>Orders</h1>
       {loading ? (
         <Loader />

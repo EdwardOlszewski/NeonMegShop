@@ -1,6 +1,11 @@
+// Dependencies
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+// Actions
+import { listProductDetails } from '../actions/productActions'
+import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
+// Components
 import {
   Row,
   Col,
@@ -11,24 +16,24 @@ import {
   Form,
   Container,
 } from 'react-bootstrap'
+import ReviewModal from '../components/ReviewModal'
 import Rating from '../components/Rating'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { listProductDetails } from '../actions/productActions'
-import { createRequest } from '../actions/requestActions'
-import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
+import DateFormat from '../components/DateFormat'
 import Meta from '../components/Meta'
-import ReviewModal from '../components/ReviewModal'
 
 const ProductScreen = ({ history, match }) => {
-  const [qty, setQty] = useState(1)
-  const [rating, setRating] = useState(0)
-  const [comment, setComment] = useState('')
-
-  const ID = match.params.id
-
+  // Assign useDispatch hook
   const dispatch = useDispatch()
 
+  // Get poduct ID from the URL
+  const ID = match.params.id
+
+  // Create stateful values and functions
+  const [qty, setQty] = useState(1)
+
+  // Pull data from the redux store
   const productDetails = useSelector((state) => state.productDetails)
   const { loading, error, product } = productDetails
 
@@ -42,38 +47,30 @@ const ProductScreen = ({ history, match }) => {
     error: errorProductReview,
   } = productReviewCreate
 
+  // Function called on submit
+  const addToCartHandler = () => {
+    history.push(`/cart/${match.params.id}?qty=${qty}`)
+  }
+
+  // useEffect hook
   useEffect(() => {
-    if (
-      !product._id ||
-      product._id !== match.params.id ||
-      successProductReview
-    ) {
+    if (!product._id || product._id !== match.params.id) {
+      dispatch(listProductDetails(match.params.id))
+    } else if (successProductReview) {
       dispatch(listProductDetails(match.params.id))
       dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
     }
   }, [dispatch, match, product._id, successProductReview])
 
-  const addToCartHandler = () => {
-    history.push(`/cart/${match.params.id}?qty=${qty}`)
-  }
-
-  const requestItemHandler = () => {
-    if (userInfo) {
-      dispatch(createRequest(product.name))
-    } else {
-      history.push('/login')
-    }
-  }
-
   return (
     <Container>
+      <Meta title={product.name} />
       {loading ? (
         <Loader />
       ) : error ? (
         <Message variant='danger'>{error}</Message>
       ) : (
         <>
-          <Meta title={product.name} />
           <Card className='card-content'>
             <Row>
               <Col sm={12} lg={5}>
@@ -142,12 +139,7 @@ const ProductScreen = ({ history, match }) => {
                       </ListGroup.Item>
                       {product.countInStock <= 0 ? (
                         <ListGroup.Item className='bg-color'>
-                          <Button
-                            onClick={requestItemHandler}
-                            className='btn-block'
-                            type='button'
-                            disabled
-                          >
+                          <Button className='btn-block' type='button' disabled>
                             Out Of Stock!
                           </Button>
                         </ListGroup.Item>
@@ -214,8 +206,7 @@ const ProductScreen = ({ history, match }) => {
 
                       <p>{review.comment}</p>
                       <p>
-                        written by {review.name},{' '}
-                        {review.createdAt.substring(0, 10)}
+                        written by {review.name}, {DateFormat(review.createdAt)}
                       </p>
                     </ListGroup.Item>
                   ))}
@@ -251,54 +242,3 @@ const ProductScreen = ({ history, match }) => {
 }
 
 export default ProductScreen
-
-/*
-
-     <Row>
-            <Col md={1} xl={2}></Col>
-            <Col sm={12} md={12} lg={12} xl={9} style={{ marginTop: '3rem' }}>
-              <ListGroup>
-                <ListGroup.Item
-                  style={{ marginTop: '2rem' }}
-                  className='bg-color'
-                >
-                  <h2>Write a Customer Review</h2>
-                  {successProductReview && (
-                    <Message variant='success'>
-                      Review submitted successfully
-                    </Message>
-                  )}
-                  {loadingProductReview && <Loader />}
-                  {errorProductReview && (
-                    <Message variant='danger'>{errorProductReview}</Message>
-                  )}
-                  {userInfo ? (
-                    <ReviewModal ID={ID} />
-                  ) : (
-                    <Message>
-                      Please <Link to='/login'>sign in</Link> to write a review{' '}
-                    </Message>
-                  )}
-                </ListGroup.Item>
-              </ListGroup>
-
-              <Card className='card-content'>
-                <h2>Reviews</h2>
-                {product.reviews.length === 0 && <Message>No Reviews</Message>}
-                <ListGroup variant='flush'>
-                  {product.reviews.map((review) => (
-                    <ListGroup.Item key={review._id} className='bg-color'>
-                      <strong>{review.name}</strong>
-                      <Rating value={review.rating} />
-                      <p>{review.createdAt.substring(0, 10)}</p>
-                      <p>{review.comment}</p>
-                    </ListGroup.Item>
-                  ))}
-                </ListGroup>
-              </Card>
-            </Col>
-            <Col md={1} xl={2}></Col>
-          </Row>
-
-
-*/

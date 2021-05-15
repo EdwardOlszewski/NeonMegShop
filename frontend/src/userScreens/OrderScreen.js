@@ -1,16 +1,18 @@
+// Dependencies
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import Message from '../components/Message'
-import Loader from '../components/Loader'
+// Actions
 import { getOrderDetails, deliverOrder } from '../actions/orderActions'
 import {
   ORDER_PAY_RESET,
   ORDER_DELIVER_RESET,
 } from '../constants/orderConstants'
+// Components
+import { Row, Col, ListGroup, Image, Card, Button, Form } from 'react-bootstrap'
 import DateFormat from '../components/DateFormat'
-
+import Message from '../components/Message'
+import Loader from '../components/Loader'
 import Meta from '../components/Meta'
 
 const OrderScreen = ({ match, history }) => {
@@ -20,19 +22,16 @@ const OrderScreen = ({ match, history }) => {
   // get the orderID from th URL
   const orderId = match.params.id
 
-  // Go to the orderDetails in the state and pull out information
+  // Pull data from the redux store
   const orderDetails = useSelector((state) => state.orderDetails)
-  const { order, loading, error } = orderDetails
+  const { order, loading, error, success } = orderDetails
 
-  // Go to the orderPay in the state and pull out information
   const orderPay = useSelector((state) => state.orderPay)
   const { loading: loadingPay, success: successPay } = orderPay
 
-  // Go to the orderDeliver in the state and pull out information
   const orderDeliver = useSelector((state) => state.orderDeliver)
   const { loading: loadingDeliver, success: successDeliver } = orderDeliver
 
-  // Go to the userLogin in the state and pull out userInfo
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
@@ -50,16 +49,26 @@ const OrderScreen = ({ match, history }) => {
   useEffect(() => {
     if (!userInfo) {
       history.push('/login')
-    }
-
-    if (!order || successPay || successDeliver || order._id !== orderId) {
+    } else if (
+      !order ||
+      successPay ||
+      successDeliver ||
+      order._id !== orderId
+    ) {
       dispatch({ type: ORDER_PAY_RESET })
       dispatch({ type: ORDER_DELIVER_RESET })
-
       dispatch(getOrderDetails(orderId))
-    } else if (!order.isPaid) {
     }
-  }, [dispatch, orderId, successPay, successDeliver, order, history, userInfo])
+  }, [
+    dispatch,
+    orderId,
+    successPay,
+    successDeliver,
+    order,
+    history,
+    userInfo,
+    success,
+  ])
 
   const deliverHandler = () => {
     dispatch(deliverOrder(order))
@@ -159,13 +168,17 @@ const OrderScreen = ({ match, history }) => {
                   <ListGroup.Item className='bg-color'>
                     <Row>
                       <Col>Tax:</Col>
-                      <Col>${order.taxPrice}</Col>
+                      <Col>
+                        $ {(Math.round(order.taxPrice * 100) / 100).toFixed(2)}
+                      </Col>
                     </Row>
                   </ListGroup.Item>
                   <ListGroup.Item className='bg-color'>
                     <Row>
                       <Col>Total:</Col>
-                      <Col>${order.totalPrice}</Col>
+                      <Col>
+                        ${(Math.round(order.totalPrice * 100) / 100).toFixed(2)}
+                      </Col>
                     </Row>
                   </ListGroup.Item>
                   <ListGroup.Item
@@ -188,7 +201,7 @@ const OrderScreen = ({ match, history }) => {
                     <ListGroup.Item className='bg-color'>
                       <Row>
                         <Col>Name:</Col>
-                        <Col>{order.user.name}</Col>
+                        <Col>{order.billingDetails.name}</Col>
                       </Row>
                     </ListGroup.Item>
                     <ListGroup.Item className='bg-color'>

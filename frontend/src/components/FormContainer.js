@@ -1,5 +1,7 @@
+// Dependencies
 import React from 'react'
-import { Container, Row, Col } from 'react-bootstrap'
+// Components
+import { Row, Col } from 'react-bootstrap'
 
 const FormContainer = ({ children }) => {
   return (

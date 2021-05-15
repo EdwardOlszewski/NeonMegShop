@@ -31,15 +31,10 @@ import {
   orderBilingReducer,
 } from './reducers/orderReducers'
 
+import { uploadImageReducer } from './reducers/imageReducers'
+
 const reducer = combineReducers({
-  productList: productListReducer,
-  productDetails: productDetailsReducer,
-  productDelete: productDeleteReducer,
-  productCreate: productCreateReducer,
-  productUpdate: productUpdateReducer,
-  productReviewCreate: productReviewCreateReducer,
-  productTopRated: productTopRatedReducer,
-  cart: cartReducer,
+  // User Reducers
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
@@ -47,6 +42,20 @@ const reducer = combineReducers({
   userList: userListReducer,
   userDelete: userDeleteReducer,
   userUpdate: userUpdateReducer,
+
+  // Product Reducers
+  productList: productListReducer,
+  productDetails: productDetailsReducer,
+  productDelete: productDeleteReducer,
+  productCreate: productCreateReducer,
+  productUpdate: productUpdateReducer,
+  productReviewCreate: productReviewCreateReducer,
+  productTopRated: productTopRatedReducer,
+
+  // Cart Reducers
+  cart: cartReducer,
+
+  // Order Reducers
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
@@ -55,6 +64,9 @@ const reducer = combineReducers({
   orderList: orderListReducer,
   orderCharge: orderChargeReducer,
   orderBilling: orderBilingReducer,
+
+  // Image Reducers
+  imageUpload: uploadImageReducer,
 })
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')

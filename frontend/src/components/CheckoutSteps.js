@@ -1,6 +1,8 @@
+// Dependencies
 import React from 'react'
-import { Nav, Card } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
+// Components
+import { Nav, Card } from 'react-bootstrap'
 
 const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
   return (

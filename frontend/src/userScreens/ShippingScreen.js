@@ -1,21 +1,29 @@
+// Dependencies
 import React, { useState } from 'react'
-import { Form, Button, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import CheckoutSteps from '../components/CheckoutSteps'
+// Actions
 import { saveShippingAddress } from '../actions/cartActions'
+// Components
+import { Form, Button, Card } from 'react-bootstrap'
+import CheckoutSteps from '../components/CheckoutSteps'
+import Meta from '../components/Meta'
 
 const ShippingScreen = ({ history }) => {
+  // Assign useDispatch hook
+  const dispatch = useDispatch()
+
+  // Pull data from the redux store
   const cart = useSelector((state) => state.cart)
   const { shippingAddress } = cart
 
+  // Create stateful values and functions
   const [address, setAddress] = useState(shippingAddress.address)
   const [state, setState] = useState(shippingAddress.state)
   const [city, setCity] = useState(shippingAddress.city)
   const [postalCode, setPostalCode] = useState(shippingAddress.postalCode)
   const [country, setCountry] = useState(shippingAddress.country)
 
-  const dispatch = useDispatch()
-
+  // Function called on Submit
   const submitHandler = (e) => {
     e.preventDefault()
     dispatch(saveShippingAddress({ address, city, postalCode, country, state }))
@@ -24,6 +32,7 @@ const ShippingScreen = ({ history }) => {
 
   return (
     <div className='checkout-content'>
+      <Meta title={'Shipping'} />
       <CheckoutSteps step1 step2 />
 
       <Card className='card-content' style={{ marginTop: '1rem' }}>

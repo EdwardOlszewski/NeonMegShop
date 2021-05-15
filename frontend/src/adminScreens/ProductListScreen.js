@@ -1,22 +1,29 @@
+// Dependencies
 import React, { useEffect } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Table, Button, Row, Col, Image, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import Message from '../components/Message'
-import Loader from '../components/Loader'
-import Paginate from '../components/Paginate'
+// Actions
 import {
   listProducts,
   deleteProduct,
   createProduct,
 } from '../actions/productActions'
 import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
+// Components
+import { Table, Button, Row, Col, Image, Card } from 'react-bootstrap'
+import Message from '../components/Message'
+import Loader from '../components/Loader'
+import Paginate from '../components/Paginate'
+import Meta from '../components/Meta'
 
 const ProductListScreen = ({ history, match }) => {
-  const pageNumber = match.params.pageNumber || 1
-
+  // Assign useDispatch hook
   const dispatch = useDispatch()
 
+  // Get page number from the url
+  const pageNumber = match.params.pageNumber || 1
+
+  // Pull data from the redux store
   const productList = useSelector((state) => state.productList)
   const { loading, error, products, page, pages } = productList
 
@@ -38,14 +45,25 @@ const ProductListScreen = ({ history, match }) => {
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
+  // Function called when delete button clicked
+  const deleteHandler = (id) => {
+    if (window.confirm('Are you sure')) {
+      dispatch(deleteProduct(id))
+    }
+  }
+
+  // Function called when create button clicked
+  const createProductHandler = () => {
+    dispatch(createProduct())
+  }
+
+  // useEffect hook
   useEffect(() => {
     dispatch({ type: PRODUCT_CREATE_RESET })
 
     if (!userInfo || !userInfo.isAdmin) {
       history.push('/login')
-    }
-
-    if (successCreate) {
+    } else if (successCreate) {
       history.push(`/admin/product/${createdProduct._id}/edit`)
     } else {
       dispatch(listProducts('', pageNumber))
@@ -60,18 +78,9 @@ const ProductListScreen = ({ history, match }) => {
     pageNumber,
   ])
 
-  const deleteHandler = (id) => {
-    if (window.confirm('Are you sure')) {
-      dispatch(deleteProduct(id))
-    }
-  }
-
-  const createProductHandler = () => {
-    dispatch(createProduct())
-  }
-
   return (
     <Card className='card-content'>
+      <Meta title={'Product List Screen'} />
       <Row className='align-items-center'>
         <Col>
           <h1>Products</h1>
