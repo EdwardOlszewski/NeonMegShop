@@ -60,7 +60,7 @@ const Catagories = ({ history }) => {
             <Nav.Link className='cat-btn'>Bead</Nav.Link>
           </LinkContainer>
 
-          <LinkContainer to='/search/beaded' activeClassName='activeButtons'>
+          <LinkContainer to='/search/Resin' activeClassName='activeButtons'>
             <Nav.Link className='cat-btn'>Resin</Nav.Link>
           </LinkContainer>
         </Navbar.Collapse>
