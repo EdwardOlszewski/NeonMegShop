@@ -30,6 +30,7 @@ import {
   ORDER_BILLING_FAIL,
   ORDER_BILLING_RESET,
 } from '../constants/orderConstants'
+
 export const orderCreateReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_CREATE_REQUEST:

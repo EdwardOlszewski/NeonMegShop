@@ -31,6 +31,8 @@ import {
   orderBilingReducer,
 } from './reducers/orderReducers'
 
+import { sripeConstantReducer } from './reducers/stripeReducers'
+
 import { uploadImageReducer } from './reducers/imageReducers'
 
 const reducer = combineReducers({
@@ -64,6 +66,7 @@ const reducer = combineReducers({
   orderList: orderListReducer,
   orderCharge: orderChargeReducer,
   orderBilling: orderBilingReducer,
+  stripeConstant: sripeConstantReducer,
 
   // Image Reducers
   imageUpload: uploadImageReducer,

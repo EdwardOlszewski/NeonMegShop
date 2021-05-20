@@ -2,11 +2,14 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 // Actions
-import { updateBilling } from '../actions/orderActions'
-import { getOrderDetails } from '../actions/orderActions'
+//import { stripePromise } from '../constants/stripeConstants'
+import {
+  updateBilling,
+  getOrderDetails,
+  getStripePromise,
+} from '../actions/orderActions'
 import { ORDER_CHARGE_RESET } from '../constants/orderConstants'
 import { payOrder } from '../actions/orderActions'
-import { stripePromise } from '../constants/stripeConstants'
 import { updateProductQTY } from '../actions/productActions'
 import { sendReceiptEmail } from '../actions/emailActions'
 // Components
@@ -18,6 +21,7 @@ import PaymentForm from '../components/PaymentForm'
 import Meta from '../components/Meta'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import { loadStripe } from '@stripe/stripe-js'
 
 const PaymentScreen = ({ match, history }) => {
   // Assign useDispatch hook to dispatch actions
@@ -36,6 +40,11 @@ const PaymentScreen = ({ match, history }) => {
 
   const orderCharge = useSelector((state) => state.orderCharge)
   const { loading: chargeLoading, success: chargeSuccess } = orderCharge
+
+  const stripeConstant = useSelector((state) => state.stripeConstant)
+  const { stripe } = stripeConstant
+
+  const stripePromise = loadStripe(stripe)
 
   // Declare new state variables and functions
   const [firstName, setFirstName] = useState('')
@@ -67,6 +76,7 @@ const PaymentScreen = ({ match, history }) => {
     if (!userInfo) {
       history.push('/login')
     } else if (!order) {
+      dispatch(getStripePromise())
       dispatch(getOrderDetails(orderId))
     } else if (order && order.isPaid) {
       history.push(`/order/${orderId}`)

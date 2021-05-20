@@ -28,8 +28,49 @@ import {
   ORDER_BILLING_DETAILS_REQUEST,
   ORDER_BILLING_DETAILS_SUCCESS,
   ORDER_BILLING_DETAILS_FAIL,
+  STRIPE_CONSTANT_REQUEST,
+  STRIPE_CONSTANT_SUCCESS,
+  STRIPE_CONSTANT_FAIL,
 } from '../constants/orderConstants'
 import { logout } from './userActions'
+
+export const getStripePromise = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: STRIPE_CONSTANT_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.get(`/api/stripe`, config)
+
+    dispatch({
+      type: STRIPE_CONSTANT_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout())
+    }
+    dispatch({
+      type: STRIPE_CONSTANT_FAIL,
+      payload: message,
+    })
+  }
+}
 
 export const createOrder = (order) => async (dispatch, getState) => {
   try {
@@ -149,37 +190,35 @@ export const payOrder = (orderId) => async (dispatch, getState) => {
   }
 }
 
-export const cardCharge = (id, orderTotal, orderId) => async (
-  dispatch,
-  getState
-) => {
-  try {
-    dispatch({
-      type: ORDER_CHARGE_REQUEST,
-    })
+export const cardCharge =
+  (id, orderTotal, orderId) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: ORDER_CHARGE_REQUEST,
+      })
 
-    const { data } = await axios.post('/api/charge', {
-      id,
-      amount: orderTotal,
-      description: orderId,
-    })
-    console.log(data)
+      const { data } = await axios.post('/api/charge', {
+        id,
+        amount: orderTotal,
+        description: orderId,
+      })
+      console.log(data)
 
-    dispatch({
-      type: ORDER_CHARGE_SUCCESS,
-      payload: data,
-    })
-  } catch (error) {
-    const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message
-    dispatch({
-      type: ORDER_CHARGE_FAIL,
-      payload: message,
-    })
+      dispatch({
+        type: ORDER_CHARGE_SUCCESS,
+        payload: data,
+      })
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+      dispatch({
+        type: ORDER_CHARGE_FAIL,
+        payload: message,
+      })
+    }
   }
-}
 
 export const deliverOrder = (order) => async (dispatch, getState) => {
   try {
@@ -297,49 +336,47 @@ export const listOrders = () => async (dispatch, getState) => {
 }
 
 // ------ Billing ------ //
-export const updateBilling = (orderId, billingDetails) => async (
-  dispatch,
-  getState
-) => {
-  try {
-    dispatch({
-      type: ORDER_BILLING_REQUEST,
-    })
+export const updateBilling =
+  (orderId, billingDetails) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: ORDER_BILLING_REQUEST,
+      })
 
-    const {
-      userLogin: { userInfo },
-    } = getState()
+      const {
+        userLogin: { userInfo },
+      } = getState()
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+
+      const { data } = await axios.put(
+        `/api/orders/${orderId}/billing`,
+        billingDetails,
+        config
+      )
+
+      dispatch({
+        type: ORDER_BILLING_SUCCESS,
+        payload: data,
+      })
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+      if (message === 'Not authorized, token failed') {
+        dispatch(logout())
+      }
+      dispatch({
+        type: ORDER_BILLING_FAIL,
+        payload: message,
+      })
     }
-
-    const { data } = await axios.put(
-      `/api/orders/${orderId}/billing`,
-      billingDetails,
-      config
-    )
-
-    dispatch({
-      type: ORDER_BILLING_SUCCESS,
-      payload: data,
-    })
-  } catch (error) {
-    const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message
-    if (message === 'Not authorized, token failed') {
-      dispatch(logout())
-    }
-    dispatch({
-      type: ORDER_BILLING_FAIL,
-      payload: message,
-    })
   }
-}
 
 export const getBillingDetails = (id) => async (dispatch, getState) => {
   try {

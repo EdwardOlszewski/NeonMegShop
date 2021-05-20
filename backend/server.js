@@ -12,6 +12,7 @@ import orderRoutes from './routes/orderRoutes.js'
 import uploadRoutes from './routes/uploadRoutes.js'
 import stripeRoute from './routes/stripeRoute.js'
 import emailRoutes from './routes/emailRoutes.js'
+import stripeRoutes from './routes/stripeRoutes.js'
 
 dotenv.config()
 
@@ -31,6 +32,7 @@ app.use('/api/orders', orderRoutes)
 app.use('/api/upload', uploadRoutes)
 app.use('/api/charge', stripeRoute)
 app.use('/api/email', emailRoutes)
+app.use('/api/stripe', stripeRoutes)
 
 app.get('/api/config/paypal', (req, res) =>
   res.send(process.env.PAYPAL_CLIENT_ID)
