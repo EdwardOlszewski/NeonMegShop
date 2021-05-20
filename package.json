@@ -4,6 +4,10 @@
   "description": "NeonMegs Shopping App",
   "main": "server.js",
   "type": "module",
+  "engines": {
+    "node": "14.17.0",
+    "npm": "7.5.2"
+  },
   "scripts": {
     "start": "node backend/server",
     "server": "nodemon backend/server",

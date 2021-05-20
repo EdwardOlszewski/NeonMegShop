@@ -1,8 +1,9 @@
 // Dependencies
 import React, { useState } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
+
 // Components
-import { Form, Nav } from 'react-bootstrap'
+import { Form, Nav, Navbar } from 'react-bootstrap'
 
 const Catagories = ({ history }) => {
   // Create stateful values and functions
@@ -20,27 +21,50 @@ const Catagories = ({ history }) => {
 
   return (
     <Form onSubmit={submitHandler} inline>
-      <div className='categories-div'>
-        <LinkContainer to='/shop' activeClassName='activeButtons'>
-          <Nav.Link className='cat-btn'>All</Nav.Link>
-        </LinkContainer>
+      <Navbar
+        className='categories-div'
+        variant='dark'
+        expand='lg'
+        collapseOnSelect
+      >
+        <Nav className='mr-auto'>
+          <Navbar.Toggle aria-controls='basic-navbar-nav'>
+            <p className='down-arrow'>
+              <i class='fas fa-chevron-down'></i>
+            </p>
+          </Navbar.Toggle>
+        </Nav>
 
-        <LinkContainer to='/search/pillow' activeClassName='activeButtons'>
-          <Nav.Link className='cat-btn'>Pillow</Nav.Link>
-        </LinkContainer>
+        <Navbar.Collapse id='basic-navbar-nav'>
+          <LinkContainer
+            to='/shop'
+            className='cat-container'
+            activeClassName='activeButtons'
+          >
+            <Nav.Link className='cat-btn'>All</Nav.Link>
+          </LinkContainer>
 
-        <LinkContainer to='/search/felt' activeClassName='activeButtons'>
-          <Nav.Link className='cat-btn'>Felt</Nav.Link>
-        </LinkContainer>
+          <LinkContainer to='/search/pillow' activeClassName='activeButtons'>
+            <Nav.Link className='cat-btn'>Pillow</Nav.Link>
+          </LinkContainer>
 
-        <LinkContainer to='/search/painting' activeClassName='activeButtons'>
-          <Nav.Link className='cat-btn'>Painting</Nav.Link>
-        </LinkContainer>
+          <LinkContainer to='/search/felt' activeClassName='activeButtons'>
+            <Nav.Link className='cat-btn'>Felt</Nav.Link>
+          </LinkContainer>
 
-        <LinkContainer to='/search/beaded' activeClassName='activeButtons'>
-          <Nav.Link className='cat-btn'>Bead</Nav.Link>
-        </LinkContainer>
-      </div>
+          <LinkContainer to='/search/painting' activeClassName='activeButtons'>
+            <Nav.Link className='cat-btn'>Painting</Nav.Link>
+          </LinkContainer>
+
+          <LinkContainer to='/search/beaded' activeClassName='activeButtons'>
+            <Nav.Link className='cat-btn'>Bead</Nav.Link>
+          </LinkContainer>
+
+          <LinkContainer to='/search/beaded' activeClassName='activeButtons'>
+            <Nav.Link className='cat-btn'>Resin</Nav.Link>
+          </LinkContainer>
+        </Navbar.Collapse>
+      </Navbar>
     </Form>
   )
 }

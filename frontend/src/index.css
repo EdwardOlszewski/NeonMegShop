@@ -13,6 +13,7 @@
 main {
   min-height: 90vh;
   background-image: url('./images/collage.png');
+  font-family: 'Farro', sans-serif;
 }
 
 input[type='text'],
@@ -229,9 +230,18 @@ h2 {
   display: inline-block;
   margin-left: 1rem;
   margin-right: 1rem;
+  font-family: 'Farro', sans-serif;
 }
 .activeButtons {
   color: rgb(74, 164, 153);
+}
+.down-arrow {
+  border: none;
+  color: purple;
+  text-decoration: none;
+  box-shadow: none;
+  text-align: center;
+  margin: auto;
 }
 
 .mobile-head {
@@ -353,10 +363,6 @@ h2 {
     font-size: 100%;
     width: 100%;
   }
-  .cat-btn {
-    margin-left: -0.5rem;
-    margin-right: -0.5rem;
-  }
 }
 
 @media (max-width: 300px) {
@@ -365,5 +371,16 @@ h2 {
   }
   .rating {
     font-size: 70%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .cat-btn {
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+    display: block;
+  }
+  .categories-div {
+    text-align: left;
   }
 }

@@ -175,6 +175,7 @@ const ProductEditScreen = ({ match, history }) => {
                 <option>felt</option>
                 <option>painting</option>
                 <option>beaded</option>
+                <option>resin</option>
               </Form.Control>
             </Form.Group>
 
