@@ -31,7 +31,7 @@ const ProductEditScreen = ({ match, history }) => {
 
   // Pull data from the redux store
   const productDetails = useSelector((state) => state.productDetails)
-  const { loading, error, product } = productDetails
+  const { loading, error, success, product } = productDetails
 
   const productUpdate = useSelector((state) => state.productUpdate)
   const {
@@ -83,18 +83,16 @@ const ProductEditScreen = ({ match, history }) => {
       history.push('/admin/productlist')
     } else if (successImg) {
       setImage(imageURL)
-    } else {
-      if (!product.name || product._id !== productId) {
-        dispatch(listProductDetails(productId))
-      } else {
-        setName(product.name)
-        setPrice(product.price)
-        setImage(product.image)
-        setCountInStock(product.countInStock)
-        setCategory(product.category)
-        setDescription(product.description)
-        setIsPublished(product.isPublished)
-      }
+    } else if (!product.name || product._id !== productId) {
+      dispatch(listProductDetails(productId))
+    } else if (success == true) {
+      setName(product.name)
+      setPrice(product.price)
+      setImage(product.image)
+      setCountInStock(product.countInStock)
+      setCategory(product.category)
+      setDescription(product.description)
+      setIsPublished(product.isPublished)
     }
   }, [
     dispatch,
